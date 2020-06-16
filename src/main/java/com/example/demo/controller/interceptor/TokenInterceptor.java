@@ -3,6 +3,7 @@ package com.example.demo.controller.interceptor;
 import com.example.demo.controller.annotation.TokenLimit;
 import com.example.demo.util.CookieUtil;
 import com.example.demo.util.TokenUtil;
+import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  * 创建时间: 2020/6/16 5:14 下午
  * Version 1.0
  */
-
+@Component
 public class TokenInterceptor extends HandlerInterceptorAdapter {
     public static final String LOGIN_IDENTITY_KEY = "HOTSPOT_LOGIN_IDENTITY";
 

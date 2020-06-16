@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.controller.annotation.TokenLimit;
 import com.example.demo.entity.Area;
 import com.example.demo.service.AreaService;
 import io.swagger.annotations.Api;
@@ -26,6 +27,7 @@ public class AreaController {
 
     @ApiOperation(value = "获取区域列表")  // for swagger
     @GetMapping(value = "/listarea")
+    @TokenLimit(CheckToken = false)
     private List<Area> listArea(){
         List<Area> list = areaService.getAreaList();
         return list;
@@ -33,6 +35,7 @@ public class AreaController {
 
     @ApiOperation(value = "根据Id获取区域信息")  // for swagger
     @GetMapping(value = "/getareabyid")
+    @TokenLimit(CheckToken = false)
     private Area getAreaById(Integer areaId){
         Area area = areaService.getAreaById(areaId);
         return area;
@@ -40,18 +43,21 @@ public class AreaController {
 
     @ApiOperation(value = "添加区域信息")  // for swagger
     @PostMapping(value = "/addarea")
+    @TokenLimit(CheckToken = false)
     private boolean addArea(@RequestBody Area area){
         return areaService.addArea(area);
     }
 
     @ApiOperation(value = "修改区域信息")  // for swagger
     @PostMapping(value = "/modifyarea")
+    @TokenLimit(CheckToken = false)
     private boolean modifyArea(@RequestBody Area area){
         return areaService.modifyArea(area);
     }
 
     @ApiOperation(value = "删除区域信息")  // for swagger
     @DeleteMapping(value = "/removearea")  // for route
+    @TokenLimit(CheckToken = false)
     private boolean removeArea(Integer areaId){
         return areaService.deleteArea(areaId);
     }
