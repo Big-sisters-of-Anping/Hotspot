@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Area;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.List;
 
