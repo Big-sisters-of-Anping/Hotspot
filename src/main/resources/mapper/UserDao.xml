@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.UserDao">
+    <insert id="AddUser" parameterType="com.example.demo.entity.User">
+        INSERT INTO
+        tb_user(user_id)
+        VALUES
+        (#{userId})
+    </insert>
+    <select id="existUser" resultType="java.lang.String">
+        SELECT user_id
+        FROM tb_user
+        where user_id = #{userId}
+    </select>
+</mapper>

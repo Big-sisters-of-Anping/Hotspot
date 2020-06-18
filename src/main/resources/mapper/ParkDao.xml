@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.ParkDao">
+    <insert id="addUserToPark">
+        INSERT INTO
+        tb_park_user(park_id, user_id)
+        VALUES
+        (#{parkId}, #{userId})
+    </insert>
+    <select id="getUserPark" resultType="com.example.demo.entity.Park">
+        SELECT tb_park.park_id, park_name
+        FROM tb_park, tb_park_user
+        WHERE user_id = #{userId}
+    </select>
+    <select id="listAllParks" resultType="com.example.demo.entity.Park">
+        SELECT park_id, park_name
+        FROM tb_park
+        ORDER BY park_id;
+    </select>
+    <delete id="removeUserFromPark">
+        DELETE FROM tb_park_user
+        WHERE park_id = #{parkId} and user_id = #{userId}
+    </delete>
+</mapper>

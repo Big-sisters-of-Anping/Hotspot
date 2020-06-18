@@ -10,14 +10,14 @@ package com.example.demo.entity;
  */
 
 public class User {
+
+    private String userId;
+
     public String getUserId() {
-        return UserId;
+        return userId;
     }
 
     public void setUserId(String userId) {
-        UserId = userId;
+        this.userId = userId;
     }
-
-    private String UserId;
-
 }

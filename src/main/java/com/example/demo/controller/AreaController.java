@@ -29,8 +29,7 @@ public class AreaController {
     @GetMapping(value = "/listarea")
     @TokenLimit(CheckToken = false)
     private List<Area> listArea(){
-        List<Area> list = areaService.getAreaList();
-        return list;
+        return areaService.getAreaList();
     }
 
     @ApiOperation(value = "根据Id获取区域信息")  // for swagger
