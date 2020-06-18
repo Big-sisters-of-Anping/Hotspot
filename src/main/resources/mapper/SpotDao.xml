@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.SpotDao">
+    <select id="listAllSpots" resultType="com.example.demo.entity.Spot">
+        SELECT spot_id, longitude, latitude, spot_name
+        FROM tb_spot
+        ORDER BY longitude ASC, latitude ASC
+    </select>
+    <select id="listAreaSpots" resultType="com.example.demo.entity.Spot">
+        SELECT spot_id, longitude, latitude, spot_name
+        FROM tb_spot
+        WHERE longitude between #{minLongitude} and #{maxLongitude}
+        and latitude between #{minLatitude} and #{maxLatitude}
+        ORDER BY longitude ASC, latitude ASC
+    </select>
+    <select id="querySpotById" resultType="com.example.demo.entity.Spot">
+        SELECT spot_id, longitude, latitude, spot_name
+        FROM tb_spot
+        WHERE spot_id = #{spotId}
+    </select>
+    <insert id="insertSpot" parameterType="com.example.demo.entity.Spot">
+        INSERT INTO
+        tb_spot(spot_name, longitude, latitude)
+        VALUES
+        (#{spotName}, #{longitude}, #{latitude})
+    </insert>
+</mapper>

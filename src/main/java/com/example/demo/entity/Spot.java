@@ -10,26 +10,10 @@ package com.example.demo.entity;
  */
 
 public class Spot {
-    private Integer spot_id;
-    private String spot_name;
+    private Integer spotId;
+    private String spotName;
     private Double longitude;
     private Double latitude;
-
-    public int getSpot_id() {
-        return spot_id;
-    }
-
-    public void setSpot_id(int spot_id) {
-        this.spot_id = spot_id;
-    }
-
-    public String getSpot_name() {
-        return spot_name;
-    }
-
-    public void setSpot_name(String spot_name) {
-        this.spot_name = spot_name;
-    }
 
     public double getLongitude() {
         return longitude;
@@ -45,5 +29,21 @@ public class Spot {
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+
+    public Integer getSpotId() {
+        return spotId;
+    }
+
+    public void setSpotId(Integer spotId) {
+        this.spotId = spotId;
+    }
+
+    public String getSpotName() {
+        return spotName;
+    }
+
+    public void setSpotName(String spotName) {
+        this.spotName = spotName;
     }
 }
