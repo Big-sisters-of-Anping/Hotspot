@@ -17,4 +17,6 @@ public interface SpotService {
     List<Spot> listAllSpots();
     Spot querySpotById(int spotId);
     int insertSpot(Spot area);
+    List<Spot> listRangeSpots(double longitude, double latitude, double rangLongitude, double rangLatitude);
+    boolean updateUserLocation(int userId, double longitude, double latitude);
 }

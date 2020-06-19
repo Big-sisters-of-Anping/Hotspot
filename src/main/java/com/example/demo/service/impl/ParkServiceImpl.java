@@ -50,7 +50,11 @@ public class ParkServiceImpl implements ParkService {
 
     @Override
     public List<Park> listAllParks() {
-        return parkDao.listAllParks();
+        List<Park> parks = parkDao.listAllParks();
+        for (Park park: parks) {
+            park.setSpots(parkDao.listSpotsInPark(park.getParkId()));
+        }
+        return parks;
     }
 
     @Transactional
@@ -122,6 +126,21 @@ public class ParkServiceImpl implements ParkService {
             }
         }catch (Exception e){
             throw new RuntimeException("向园区添加地点失败: " + e.getMessage());
+        }
+    }
+
+    @Transactional
+    @Override
+    public boolean removeSpotFromPark(int parkId, int spotId) {
+        try {
+            int effectedNum = parkDao.removeSpotFromPark(parkId, spotId);
+            if (effectedNum > 0)
+                return true;
+            else {
+                throw new RuntimeException("从园区删除地点失败！");
+            }
+        }catch (Exception e){
+            throw new RuntimeException("从园区删除地点失败: " + e.getMessage());
         }
     }
 }

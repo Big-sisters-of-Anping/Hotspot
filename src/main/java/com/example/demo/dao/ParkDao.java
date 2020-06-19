@@ -23,4 +23,5 @@ public interface ParkDao {
     List<Spot> listSpotsInPark(int parkId);
     int addPark(Park park);
     int deletePark(int parkId);
+    int removeSpotFromPark(int parkId, int spotId);
 }

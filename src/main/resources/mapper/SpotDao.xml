@@ -26,4 +26,32 @@
         VALUES
         (#{spotName}, #{longitude}, #{latitude})
     </insert>
+    <insert id="insertUserLocation">
+        INSERT INTO
+        tb_user_location(user_id, spot_id, update_time)
+        VALUES
+        (#{userId}, #{spotId}, now());
+        UPDATE tb_spot
+        SET realtime_people = realtime_people+1
+        WHERE spot_id = #{spotId};
+    </insert>
+    <update id="updateUserLocation">
+        UPDATE tb_spot
+        SET realtime_people = realtime_people-1
+        WHERE spot_id in (SELECT spot_id FROM tb_user_location where user_id = #{userId});
+        UPDATE tb_user_location
+        <set>
+            <if test="spotId != null">spot_id = #{spotId},</if>
+            update_time = now()
+        </set>
+        WHERE user_id = #{userId};
+        UPDATE tb_spot
+        SET realtime_people = realtime_people+1
+        WHERE spot_id = #{spotId};
+    </update>
+    <select id="existUserLocation" resultType="java.lang.Integer">
+        SELECT COUNT(spot_id)
+        FROM tb_user_location
+        WHERE user_id = #{userId}
+    </select>
 </mapper>

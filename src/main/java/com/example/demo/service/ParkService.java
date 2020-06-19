@@ -22,4 +22,5 @@ public interface ParkService {
     List<Spot> listSpotsInPark(int parkId);
     int addPark(Park park);
     boolean deletePark(int parkId);
+    boolean removeSpotFromPark(int parkId, int spotId);
 }

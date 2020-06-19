@@ -30,7 +30,7 @@
         (#{parkId}, #{spotId})
     </insert>
     <select id="listSpotsInPark" resultType="com.example.demo.entity.Spot">
-        SELECT tb_spot.spot_id, tb_spot.spot_name, tb_spot.longitude, tb_spot.latitude
+        SELECT tb_spot.spot_id, tb_spot.spot_name, tb_spot.longitude, tb_spot.latitude, tb_spot.realtime_people
         FROM tb_spot, tb_park_spot
         WHERE tb_spot.spot_id = tb_park_spot.spot_id and park_id = #{parkId}
     </select>
@@ -43,5 +43,9 @@
     <delete id="deletePark">
         DELETE FROM tb_park
         WHERE park_id = #{parkId}
+    </delete>
+    <delete id="removeSpotFromPark">
+        DELETE FROM tb_park_spot
+        WHERE park_id = #{parkId} and spot_id = #{spotId}
     </delete>
 </mapper>

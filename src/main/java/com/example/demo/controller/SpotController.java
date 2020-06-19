@@ -53,4 +53,11 @@ public class SpotController {
     private int insertSpot(@RequestBody Spot area){
         return spotService.insertSpot(area);
     }
+
+    @ApiOperation(value = "用户更新位置", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
+    @GetMapping(value = "/updateUserLocation")
+    @TokenLimit(CheckToken = false)
+    private boolean updateUserLocation(int userId, double longitude, double latitude){
+        return spotService.updateUserLocation(userId, longitude, latitude);
+    }
 }

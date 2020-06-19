@@ -17,4 +17,7 @@ public interface SpotDao {
     List<Spot> listAllSpots();
     Spot querySpotById(int spotId);
     int insertSpot(Spot area);
+    int insertUserLocation(int userId, int spotId);
+    int updateUserLocation(int userId, int spotId);
+    int existUserLocation(int userId);
 }

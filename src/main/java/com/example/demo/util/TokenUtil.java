@@ -17,7 +17,7 @@ import java.util.HashMap;
 
 @Component
 public class TokenUtil {
-    private static HashMap<String, String> realTimeTokens = new HashMap<String, String>(); // userId, Token
+    private static HashMap<Integer, String> realTimeTokens = new HashMap<Integer, String>(); // userId, Token
 
     /**
      * 查询是否存在Token
@@ -36,7 +36,7 @@ public class TokenUtil {
      * @param userId
      * @return
      */
-    public static boolean FindTokenByUser(String userId){
+    public static boolean FindTokenByUser(int userId){
         if (realTimeTokens.containsKey(userId))
             return true;
         else
@@ -48,7 +48,7 @@ public class TokenUtil {
      * @param userId
      * @return
      */
-    public static String GenerateToken(String userId){
+    public static String GenerateToken(int userId){
         long curr = System.currentTimeMillis();
         String token = DigestUtils.md5DigestAsHex(String.valueOf(userId + "-" + curr).getBytes());
         token = new BigInteger(1, token.getBytes()).toString(16);
@@ -61,7 +61,7 @@ public class TokenUtil {
      * @param userId 要移除的token对应的userId
      * @return 如果不存在Token，返回false；否则，返回true
      */
-    public static boolean RemoveToken(String userId){
+    public static boolean RemoveToken(int userId){
         if (FindTokenByUser(userId)) {
             realTimeTokens.remove(userId);
             return true;
@@ -74,7 +74,7 @@ public class TokenUtil {
      * @param userId
      * @return
      */
-    public static String GetToken(String userId){
+    public static String GetToken(int userId){
         if (realTimeTokens.containsKey(userId))
             return realTimeTokens.get(userId);
         else

@@ -71,16 +71,23 @@ public class ParkController {
     }
 
     @ApiOperation(value = "添加园区，返回spotId", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
-    @PostMapping(value = "addPark")
+    @PostMapping(value = "/addPark")
     @TokenLimit(CheckToken = false)
     private int addPark(@RequestBody Park park){
         return parkService.addPark(park);
     }
 
     @ApiOperation(value = "删除园区", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
-    @DeleteMapping(value = "addPark")
+    @DeleteMapping(value = "/deletePark")
     @TokenLimit(CheckToken = false)
     private boolean deletePark(int parkId){
         return parkService.deletePark(parkId);
+    }
+
+    @ApiOperation(value = "移除园区中的某地点", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
+    @DeleteMapping(value = "/removeSpotFromPark")
+    @TokenLimit(CheckToken = false)
+    private boolean removeSpotFromPark(int parkId, int spotId){
+        return parkService.removeSpotFromPark(parkId, spotId);
     }
 }

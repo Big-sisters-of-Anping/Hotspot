@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import org.gavaghan.geodesy.GlobalCoordinates;
+
 /**
  * 类名称: Spot
  * 类描述: Spot实体类，地图上具体的某个地区，人数统计的最小单位
@@ -12,24 +14,31 @@ package com.example.demo.entity;
 public class Spot {
     private Integer spotId;
     private String spotName;
-    private Double longitude;
-    private Double latitude;
     private Integer realtimePeople;
+    private GlobalCoordinates location = new GlobalCoordinates(0, 0);
+
+//    public void setLocation(GlobalCoordinates location) {
+//        this.location = location;
+//    }
+//
+//    public GlobalCoordinates getLocation() {
+//        return location;
+//    }
 
     public double getLongitude() {
-        return longitude;
+        return location.getLongitude();
     }
 
     public void setLongitude(double longitude) {
-        this.longitude = longitude;
+        location.setLongitude(longitude);
     }
 
     public double getLatitude() {
-        return latitude;
+        return location.getLatitude();
     }
 
     public void setLatitude(double latitude) {
-        this.latitude = latitude;
+        location.setLatitude(latitude);
     }
 
     public Integer getSpotId() {
