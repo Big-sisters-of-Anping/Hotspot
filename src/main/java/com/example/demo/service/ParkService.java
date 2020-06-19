@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Park;
+import com.example.demo.entity.Spot;
 
 import java.util.List;
 
@@ -17,4 +18,8 @@ public interface ParkService {
     List<Park> getUserPark(String userId);
     List<Park> listAllParks();
     boolean removeUserFromPark(String userId, int parkId);
+    boolean addSpotToPark(int parkId, int spotId);
+    List<Spot> listSpotsInPark(int parkId);
+    int addPark(Park park);
+    boolean deletePark(int parkId);
 }

@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.controller.annotation.TokenLimit;
 import com.example.demo.entity.Park;
+import com.example.demo.entity.Spot;
 import com.example.demo.entity.User;
 import com.example.demo.service.ParkService;
 import io.swagger.annotations.Api;
@@ -53,5 +54,33 @@ public class ParkController {
     @TokenLimit(CheckToken = false)
     private boolean removeUserFromPark(String userId, int parkId) {
         return parkService.removeUserFromPark(userId, parkId);
+    }
+
+    @ApiOperation(value = "向园区添加地点", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
+    @GetMapping(value = "/addSpotToPark")
+    @TokenLimit(CheckToken = false)
+    private boolean addSpotToPark(int parkId, int spotId){
+        return parkService.addSpotToPark(parkId, spotId);
+    }
+
+    @ApiOperation(value = "列出园区所有地点", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
+    @GetMapping(value = "/listSpotsInPark")
+    @TokenLimit(CheckToken = false)
+    private List<Spot> listSpotsInPark(int parkId){
+        return parkService.listSpotsInPark(parkId);
+    }
+
+    @ApiOperation(value = "添加园区，返回spotId", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
+    @PostMapping(value = "addPark")
+    @TokenLimit(CheckToken = false)
+    private int addPark(@RequestBody Park park){
+        return parkService.addPark(park);
+    }
+
+    @ApiOperation(value = "删除园区", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
+    @DeleteMapping(value = "addPark")
+    @TokenLimit(CheckToken = false)
+    private boolean deletePark(int parkId){
+        return parkService.deletePark(parkId);
     }
 }

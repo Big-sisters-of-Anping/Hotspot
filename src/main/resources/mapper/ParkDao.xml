@@ -23,4 +23,25 @@
         DELETE FROM tb_park_user
         WHERE park_id = #{parkId} and user_id = #{userId}
     </delete>
+    <insert id="addSpotToPark">
+        INSERT INTO
+        tb_park_spot(park_id, spot_id)
+        VALUES
+        (#{parkId}, #{spotId})
+    </insert>
+    <select id="listSpotsInPark" resultType="com.example.demo.entity.Spot">
+        SELECT tb_spot.spot_id, tb_spot.spot_name, tb_spot.longitude, tb_spot.latitude
+        FROM tb_spot, tb_park_spot
+        WHERE tb_spot.spot_id = tb_park_spot.spot_id and park_id = #{parkId}
+    </select>
+    <insert id="addPark" parameterType="com.example.demo.entity.Park" keyProperty="parkId">
+        INSERT INTO
+        tb_park(park_name)
+        VALUES
+        (#{parkName})
+    </insert>
+    <delete id="deletePark">
+        DELETE FROM tb_park
+        WHERE park_id = #{parkId}
+    </delete>
 </mapper>

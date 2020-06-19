@@ -14,6 +14,7 @@ public class Spot {
     private String spotName;
     private Double longitude;
     private Double latitude;
+    private Integer realtimePeople;
 
     public double getLongitude() {
         return longitude;
@@ -45,5 +46,13 @@ public class Spot {
 
     public void setSpotName(String spotName) {
         this.spotName = spotName;
+    }
+
+    public Integer getRealtimePeople() {
+        return realtimePeople;
+    }
+
+    public void setRealtimePeople(Integer realtimePeople) {
+        this.realtimePeople = realtimePeople;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.demo.dao;
 
 import com.example.demo.entity.Park;
+import com.example.demo.entity.Spot;
 
 import java.util.List;
 
@@ -18,4 +19,8 @@ public interface ParkDao {
     List<Park> getUserPark(String userId);
     List<Park> listAllParks();
     int removeUserFromPark(String userId, int parkId);
+    int addSpotToPark(int parkId, int spotId);
+    List<Spot> listSpotsInPark(int parkId);
+    int addPark(Park park);
+    int deletePark(int parkId);
 }

@@ -40,12 +40,12 @@ public class SpotServiceImpl implements SpotService {
 
     @Transactional
     @Override
-    public boolean insertSpot(Spot spot) {
+    public int insertSpot(Spot spot) {
         if (spot.getSpotName() != null && !"".equals(spot.getSpotName())){
             try {
                 int effectedNum = spotDao.insertSpot(spot);
                 if (effectedNum > 0)
-                    return true;
+                    return spot.getSpotId();
                 else {
                     throw new RuntimeException("添加地点失败！");
                 }

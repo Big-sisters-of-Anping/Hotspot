@@ -2,6 +2,7 @@ package com.example.demo.service.impl;
 
 import com.example.demo.dao.ParkDao;
 import com.example.demo.entity.Park;
+import com.example.demo.entity.Spot;
 import com.example.demo.service.ParkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,6 +70,58 @@ public class ParkServiceImpl implements ParkService {
         }
         else {
             throw new RuntimeException("用户Id不能为空！");
+        }
+    }
+
+    @Transactional
+    @Override
+    public boolean addSpotToPark(int parkId, int spotId){
+        try {
+            int effectedNum = parkDao.addSpotToPark(parkId, spotId);
+            if (effectedNum > 0)
+                return true;
+            else {
+                throw new RuntimeException("向园区添加地点失败！");
+            }
+        }catch (Exception e){
+            throw new RuntimeException("向园区添加地点失败: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Spot> listSpotsInPark(int parkId){
+        return parkDao.listSpotsInPark(parkId);
+    }
+
+    @Transactional
+    @Override
+    public int addPark(Park park){
+        if (park.getParkName() != null && !"".equals(park.getParkName())){
+            try {
+                int effectedNum = parkDao.addPark(park);
+                if (effectedNum > 0)
+                    return park.getParkId();
+                else
+                    throw new RuntimeException("添加园区失败！");
+            }catch (Exception e){
+                throw new RuntimeException("添加园区失败: " + e.getMessage());
+            }
+        }else
+            throw new RuntimeException("园区名不能为空！");
+    }
+
+    @Transactional
+    @Override
+    public boolean deletePark(int parkId){
+        try {
+            int effectedNum = parkDao.deletePark(parkId);
+            if (effectedNum > 0)
+                return true;
+            else {
+                throw new RuntimeException("向园区添加地点失败！");
+            }
+        }catch (Exception e){
+            throw new RuntimeException("向园区添加地点失败: " + e.getMessage());
         }
     }
 }
