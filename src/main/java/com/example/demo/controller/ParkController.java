@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.controller.annotation.TokenLimit;
 import com.example.demo.entity.Park;
 import com.example.demo.entity.Spot;
-import com.example.demo.entity.User;
 import com.example.demo.service.ParkService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
