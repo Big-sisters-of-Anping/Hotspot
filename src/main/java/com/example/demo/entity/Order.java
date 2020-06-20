@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * 类名称: Order
@@ -13,12 +13,10 @@ import java.util.Date;
 public class Order {
     private int orderId;
     private int userId;
-    private int spotId;
-    private Date startTime;
-    private Date endTime;
+    private Date orderDate;
+    private SpotOrderTime orderTime = new SpotOrderTime();
     private int orderStatus;
     private String note;
-
 
     public int getOrderId() {
         return orderId;
@@ -37,27 +35,11 @@ public class Order {
     }
 
     public int getSpotId() {
-        return spotId;
+        return orderTime.getSpotId();
     }
 
     public void setSpotId(int spotId) {
-        this.spotId = spotId;
-    }
-
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+        this.orderTime.setSpotId(spotId);
     }
 
     public String statusToString(){
@@ -68,6 +50,8 @@ public class Order {
                 return "成功";
             case 2:
                 return "失败";
+            case 3:
+                return "已取消";
             default:
                 return "未定义";
         }
@@ -87,5 +71,37 @@ public class Order {
 
     public int getOrderStatus() {
         return orderStatus;
+    }
+
+    public String getSpotName() {
+        return orderTime.getSpotName();
+    }
+
+    public void setSpotName(String spotName) {
+        orderTime.setSpotName(spotName);
+    }
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public String getStartTime() {
+        return orderTime.getStartTime();
+    }
+
+    public void setStartTime(String startTime) {
+        orderTime.setStartTime(startTime);
+    }
+
+    public String getEndTime() {
+        return orderTime.getEndTime();
+    }
+
+    public void setEndTime(String endTime) {
+        orderTime.setEndTime(endTime);
     }
 }

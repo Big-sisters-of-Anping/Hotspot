@@ -50,8 +50,15 @@ public class SpotController {
     @ApiOperation(value = "添加地点，返回spotId", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
     @PostMapping("/addSpot")
     @TokenLimit(CheckToken = false)
-    private int insertSpot(@RequestBody Spot area){
-        return spotService.insertSpot(area);
+    private int insertSpot(@RequestBody Spot spot){
+        return spotService.insertSpot(spot);
+    }
+
+    @ApiOperation(value = "更新地点信息", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
+    @PostMapping("/updateSpot")
+    @TokenLimit(CheckToken = false)
+    private boolean updateSpot(@RequestBody Spot spot){
+        return spotService.updateSpot(spot);
     }
 
     @ApiOperation(value = "用户更新位置", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")

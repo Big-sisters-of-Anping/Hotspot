@@ -5,7 +5,6 @@ import com.example.demo.entity.Order;
 import com.example.demo.service.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,17 +54,31 @@ public class OrderController {
         return orderService.insertOrder(order);
     }
 
-    @ApiOperation(value = "更新预约", notes = "仅能够更新预约时间\n特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger
-    @PostMapping(value = "/updateOrder")
-    @TokenLimit(CheckToken = false)
-    private boolean updateOrder(@RequestBody Order order){
-        return orderService.updateOrder(order);
-    }
-
-    @ApiOperation(value = "取消预约", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger
+    @ApiOperation(value = "删除预约", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger
     @DeleteMapping(value = "/deleteOrder")
     @TokenLimit(CheckToken = false)
     private boolean deleteOrder(int orderId){
         return orderService.deleteOrder(orderId);
+    }
+
+    @ApiOperation(value = "取消预约", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger
+    @GetMapping(value = "/cancelOrder")
+    @TokenLimit(CheckToken = false)
+    private boolean cancelOrder(int orderId){
+        return orderService.cancelOrder(orderId);
+    }
+
+    @ApiOperation(value = "通过预约", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger
+    @GetMapping(value = "/agreeOrder")
+    @TokenLimit(CheckToken = false)
+    private boolean agreeOrder(int orderId){
+        return orderService.agreeOrder(orderId);
+    }
+
+    @ApiOperation(value = "拒绝预约", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger
+    @GetMapping(value = "/disagreeOrder")
+    @TokenLimit(CheckToken = false)
+    private boolean disagreeOrder(int orderId){
+        return orderService.disagreeOrder(orderId);
     }
 }

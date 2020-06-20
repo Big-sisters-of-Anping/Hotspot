@@ -17,6 +17,8 @@ public interface OrderDao {
     List<Order> listUserOrders(int userId);
     List<Order> listSpotOrders(int spotId);
     int insertOrder(Order order);
-    int updateOrder(Order order);
     int deleteOrder(int orderId);
+    int cancelOrder(int orderId);
+    int agreeOrder(int orderId);
+    int disagreeOrder(int orderId);
 }

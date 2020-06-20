@@ -15,6 +15,7 @@ public class Spot {
     private Integer spotId;
     private String spotName;
     private Integer realtimePeople;
+    private Integer suggestedPeople;
     private GlobalCoordinates location = new GlobalCoordinates(0, 0);
 
 //    public void setLocation(GlobalCoordinates location) {
@@ -63,5 +64,13 @@ public class Spot {
 
     public void setRealtimePeople(Integer realtimePeople) {
         this.realtimePeople = realtimePeople;
+    }
+
+    public Integer getSuggestedPeople() {
+        return suggestedPeople;
+    }
+
+    public void setSuggestedPeople(Integer suggestedPeople) {
+        this.suggestedPeople = suggestedPeople;
     }
 }

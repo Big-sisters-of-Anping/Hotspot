@@ -81,6 +81,21 @@ public class SpotServiceImpl implements SpotService {
         }
     }
 
+    @Transactional
+    @Override
+    public boolean updateSpot(Spot spot) {
+        try {
+            int effectedNum = spotDao.updateSpot(spot);
+            if (effectedNum > 0)
+                return true;
+            else {
+                throw new RuntimeException("更新地点信息失败！");
+            }
+        }catch (Exception e){
+            throw new RuntimeException("更新地点信息失败：" + e.getMessage());
+        }
+    }
+
     /**
      * 更新用户位置
      * @param userId

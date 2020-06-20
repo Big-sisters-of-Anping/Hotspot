@@ -17,6 +17,8 @@ public interface OrderService {
     List<Order> listUserOrders(int userId);
     List<Order> listSpotOrders(int spotId);
     int insertOrder(Order order);
-    boolean updateOrder(Order order);
     boolean deleteOrder(int orderId);
+    boolean cancelOrder(int orderId);
+    boolean agreeOrder(int orderId);
+    boolean disagreeOrder(int orderId);
 }

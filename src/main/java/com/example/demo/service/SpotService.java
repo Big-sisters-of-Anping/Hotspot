@@ -13,10 +13,11 @@ import java.util.List;
  * Version 1.0
  */
 public interface SpotService {
-    List<Spot> listAreaSpots(double minLongitude, double maxLongitude, double minLatitude, double maxLatitude);
     List<Spot> listAllSpots();
+    List<Spot> listAreaSpots(double minLongitude, double maxLongitude, double minLatitude, double maxLatitude);
+    List<Spot> listRangeSpots(double longitude, double latitude, double rangLongitude, double rangLatitude);
     Spot querySpotById(int spotId);
     int insertSpot(Spot area);
-    List<Spot> listRangeSpots(double longitude, double latitude, double rangLongitude, double rangLatitude);
+    boolean updateSpot(Spot spot);
     boolean updateUserLocation(int userId, double longitude, double latitude);
 }

@@ -4,38 +4,51 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.dao.OrderDao">
     <select id="listAllOrders" resultType="com.example.demo.entity.Order">
-        SELECT order_id, user_id, spot_id, start_time, end_time, order_status, note
-        FROM tb_order
-        ORDER BY start_time DESC, end_time DESC
+        SELECT order_id, user_id, tb_spot_order_time.spot_id, tb_spot_order_time.start_time, tb_spot_order_time.end_time, order_date, order_status, note, tb_spot.spot_name
+        FROM tb_order, tb_spot, tb_spot_order_time
+        WHERE tb_spot.spot_id = tb_spot_order_time.spot_id
+        and tb_order.order_time = tb_spot_order_time.spot_order_time_id
+        ORDER BY order_date DESC, start_time DESC, end_time DESC
     </select>
     <select id="listUserOrders" resultType="com.example.demo.entity.Order">
-        SELECT order_id, user_id, spot_id, start_time, end_time, order_status, note
-        FROM tb_order
+        SELECT order_id, user_id, tb_spot_order_time.spot_id, tb_spot_order_time.start_time, tb_spot_order_time.end_time, order_date, order_status, note, tb_spot.spot_name
+        FROM tb_order, tb_spot, tb_spot_order_time
         WHERE user_id = #{userId}
-        ORDER BY start_time DESC, end_time DESC
+        and tb_spot.spot_id = tb_spot_order_time.spot_id
+        and tb_order.order_time = tb_spot_order_time.spot_order_time_id
+        ORDER BY order_date DESC, start_time DESC, end_time DESC
     </select>
     <select id="listSpotOrders" resultType="com.example.demo.entity.Order">
-        SELECT order_id, user_id, spot_id, start_time, end_time, order_status, note
-        FROM tb_order
+        SELECT order_id, user_id, tb_spot_order_time.spot_id, tb_spot_order_time.start_time, tb_spot_order_time.end_time, order_date, order_status, note, tb_spot.spot_name
+        FROM tb_order, tb_spot, tb_spot_order_time
         WHERE spot_id = #{spotId}
-        ORDER BY start_time DESC, end_time DESC
+        and tb_spot.spot_id = tb_spot_order_time.spot_id
+        and tb_order.order_time = tb_spot_order_time.spot_order_time_id
+        ORDER BY order_date DESC, start_time DESC, end_time DESC
     </select>
     <insert id="insertOrder" parameterType="com.example.demo.entity.Order" keyProperty="orderId">
         INSERT INTO
-        tb_order(user_id, spot_id, start_time, end_time, note)
+        tb_order(user_id, order_date, order_time, note)
         VALUES
-        (#{userId}, #{spotId}, #{startTime}, #{endTime}, #{note})
+        (#{userId}, #{orderDate}, (SELECT spot_order_time_id FROM tb_spot_order_time WHERE spot_id = #{spotId} and start_time = #{startTime} and end_time = #{endTime}), #{note})
     </insert>
-    <update id="updateOrder" parameterType="com.example.demo.entity.Order">
-        UPDATE tb_order
-        <set>
-            <if test="startTime != null">start_time = #{startTime},</if>
-            <if test="endTime != null">end_time = #{endTime},</if>
-        </set>
-        WHERE order_id = #{orderId}
-    </update>
     <delete id="deleteOrder">
         DELETE FROM tb_order
         WHERE order_id = #{orderId}
     </delete>
+    <update id="cancelOrder">
+        UPDATE tb_order
+        SET order_status = 3
+        WHERE order_id = #{orderId}
+    </update>
+    <update id="agreeOrder">
+        UPDATE tb_order
+        SET order_status = 1
+        WHERE order_id = #{orderId}
+    </update>
+    <update id="disagreeOrder">
+        UPDATE tb_order
+        SET order_status = 2
+        WHERE order_id = #{orderId}
+    </update>
 </mapper>
