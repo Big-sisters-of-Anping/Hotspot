@@ -1,0 +1,46 @@
+server:
+  port: 8080
+
+# ----- for swagger -----
+info:
+  app:
+    title:
+      Hotspot
+    description:
+      热力图服务
+    termsOfServiceUrl:
+      http://localhost:8080/swagger-ui.html
+    contact:
+      Wang Qingyue
+    version:
+      0.1
+
+swagger:
+  controller:
+    package:
+      com.example.demo.controller
+# ----- for swagger -----
+
+# ----- for mysql -----
+jdbc:
+  driver:
+    com.mysql.jdbc.Driver
+  url:
+    jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true&&serverTimezone=Asia/Shanghai
+  username:
+    root
+  password:
+    123456
+# ----- for mysql -----
+
+# ----- for mybatis -----
+mybatis_config_file:
+  mybatis-config.xml
+
+mapper_path:
+  /mapper/**.xml
+
+entity_package:
+  com.example.demo.entity
+# ----- for mybatis -----
+
