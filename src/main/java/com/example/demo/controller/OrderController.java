@@ -2,12 +2,14 @@ package com.example.demo.controller;
 
 import com.example.demo.controller.annotation.TokenLimit;
 import com.example.demo.entity.Order;
+import com.example.demo.entity.SpotOrderTime;
 import com.example.demo.service.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -45,6 +47,13 @@ public class OrderController {
     @TokenLimit(CheckToken = false)
     private List<Order> listSpotOrders(int spotId){
         return orderService.listSpotOrders(spotId);
+    }
+
+    @ApiOperation(value = "列出某地某天的预约时间列表", notes = "日期格式'yyyy-mm-dd'\n特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
+    @GetMapping(value = "/listSpotOrderTime")
+    @TokenLimit(CheckToken = false)
+    private List<SpotOrderTime> listSpotOrderTime(int spotId, Date date) {
+        return orderService.listSpotOrderTime(spotId, date);
     }
 
     @ApiOperation(value = "新增预约", notes = "返回预约Id\n特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger

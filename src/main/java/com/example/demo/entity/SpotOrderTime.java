@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import java.sql.Date;
+
 /**
  * 类名称: SpotOrderTime
  * 类描述: 某地可预约时间表 实体类

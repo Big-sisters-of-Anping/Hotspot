@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Order;
+import com.example.demo.entity.SpotOrderTime;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -16,6 +18,7 @@ public interface OrderService {
     List<Order> listAllOrders();
     List<Order> listUserOrders(int userId);
     List<Order> listSpotOrders(int spotId);
+    List<SpotOrderTime> listSpotOrderTime(int spotId, Date date);
     int insertOrder(Order order);
     boolean deleteOrder(int orderId);
     boolean cancelOrder(int orderId);

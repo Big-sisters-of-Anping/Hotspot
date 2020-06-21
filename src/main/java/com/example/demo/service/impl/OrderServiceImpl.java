@@ -2,12 +2,13 @@ package com.example.demo.service.impl;
 
 import com.example.demo.dao.OrderDao;
 import com.example.demo.entity.Order;
+import com.example.demo.entity.SpotOrderTime;
 import com.example.demo.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Time;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -39,6 +40,12 @@ public class OrderServiceImpl implements OrderService {
         return orderDao.listSpotOrders(spotId);
     }
 
+    @Override
+    public List<SpotOrderTime> listSpotOrderTime(int spotId, Date date) {
+        System.out.print(date);
+        return orderDao.listSpotOrderTime(spotId,date);
+    }
+
     @Transactional
     @Override
     public int insertOrder(Order order) {
@@ -56,24 +63,6 @@ public class OrderServiceImpl implements OrderService {
             throw new RuntimeException("未定义的预约时间！");
         }
     }
-
-//    @Transactional
-//    @Override
-//    public boolean updateOrder(Order order) {
-//        if (order.getStartTime() != null && order.getEndTime() != null && order.getStartTime().before(order.getEndTime())){
-//            try {
-//                int effectedNum = orderDao.updateOrder(order);
-//                if (effectedNum > 0)
-//                    return true;
-//                else
-//                    throw new RuntimeException("更新预约失败！");
-//            }catch (Exception e){
-//                throw new RuntimeException("更新预约失败：" + e.getMessage());
-//            }
-//        }else {
-//            throw new RuntimeException("未定义/不符合逻辑的预约时间！");
-//        }
-//    }
 
     @Transactional
     @Override

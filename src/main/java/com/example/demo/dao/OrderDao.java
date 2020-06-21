@@ -1,7 +1,9 @@
 package com.example.demo.dao;
 
 import com.example.demo.entity.Order;
+import com.example.demo.entity.SpotOrderTime;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -16,6 +18,7 @@ public interface OrderDao {
     List<Order> listAllOrders();
     List<Order> listUserOrders(int userId);
     List<Order> listSpotOrders(int spotId);
+    List<SpotOrderTime> listSpotOrderTime(int spotId, Date orderDate);
     int insertOrder(Order order);
     int deleteOrder(int orderId);
     int cancelOrder(int orderId);
