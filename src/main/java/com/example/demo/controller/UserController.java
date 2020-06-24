@@ -34,7 +34,7 @@ public class UserController {
         return userService.signIn(userId);
     }
 
-    @ApiOperation(value = "用户注册", notes = "向数据库注册用户并返回Token和用户唯一Id，其他函数(除非特殊说明)需要在Cookie中携带Token才能通过权限验证\n特殊说明：本函数不需要Token验证")
+    @ApiOperation(value = "用户注册", notes = "需要传入除userId之外的信息\n向数据库注册用户并返回Token和用户唯一Id，其他函数(除非特殊说明)需要在Cookie中携带Token才能通过权限验证\n特殊说明：本函数不需要Token验证")
     @PostMapping(value = "/signup")
     @TokenLimit(CheckToken=false)
     private HashMap<String, String> signUp(@RequestBody User user){

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -49,18 +50,25 @@ public class OrderController {
         return orderService.listSpotOrders(spotId);
     }
 
-    @ApiOperation(value = "列出某地某天的预约时间列表", notes = "日期格式'yyyy-mm-dd'\n特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
+    @ApiOperation(value = "列出某地某天的预约时间列表", notes = "注意：日期格式为\"yyyy-mm-dd\"\n特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
     @GetMapping(value = "/listSpotOrderTime")
     @TokenLimit(CheckToken = false)
     private List<SpotOrderTime> listSpotOrderTime(int spotId, Date date) {
         return orderService.listSpotOrderTime(spotId, date);
     }
 
-    @ApiOperation(value = "新增预约", notes = "返回预约Id\n特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger
+    @ApiOperation(value = "新增预约", notes = "返回预约Id\n需要传入userId、orderDate、spotOrderTimeId、note(可为空字符串)\n注意：日期格式为\"yyyy-mm-dd\"\n特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger
     @PostMapping(value = "/addOrder")
     @TokenLimit(CheckToken = false)
     private int addOrder(@RequestBody Order order){
         return orderService.insertOrder(order);
+    }
+
+    @ApiOperation(value = "新增预约（先到先得）", notes = "新增预约并且如果当前已预约人数小于预约人数上限则直接通过预约，若预约成功则返回orderId\n需要传入userId、orderDate、spotOrderTimeId、note(可为空字符串)\n注意：日期格式为\"yyyy-mm-dd\"\n特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger
+    @PostMapping(value = "/addFIFOOrder")
+    @TokenLimit(CheckToken = false)
+    private int addFIFOOrder(@RequestBody Order order){
+        return orderService.insertAndCheckOrder(order);
     }
 
     @ApiOperation(value = "删除预约", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger

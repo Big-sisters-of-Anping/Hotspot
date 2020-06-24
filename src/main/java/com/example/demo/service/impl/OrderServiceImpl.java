@@ -49,18 +49,43 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @Override
     public int insertOrder(Order order) {
-        if (order.getStartTime() != null && order.getEndTime() != null){
-            try {
-                int effectedNum = orderDao.insertOrder(order);
-                if (effectedNum > 0)
-                    return order.getOrderId();
-                else
-                    throw new RuntimeException("插入预约失败！");
-            }catch (Exception e){
-                throw new RuntimeException("插入预约失败：" + e.getMessage());
+        try {
+            int effectedNum = orderDao.insertOrder(order);
+            if (effectedNum > 0)
+                return order.getOrderId();
+            else
+                throw new RuntimeException("插入预约失败！");
+        }catch (Exception e){
+            throw new RuntimeException("插入预约失败：" + e.getMessage());
+        }
+    }
+
+    @Override
+    public boolean checkOrderPeople(int orderId, Date orderDate) {
+        return 1 == orderDao.checkOrderPeople(orderId, orderDate);
+    }
+
+    @Transactional
+    @Override
+    public int insertAndCheckOrder(Order order) {
+        try {
+            int effectedNum = orderDao.insertOrder(order);
+            if (effectedNum > 0){
+                int orderId = order.getOrderId();
+                if (checkOrderPeople(orderId, order.getOrderDate())){
+                    effectedNum = orderDao.agreeOrder(orderId);
+                    if (effectedNum > 0)
+                        return orderId;
+                    else
+                        throw new RuntimeException("预约失败！通过预约失败！");
+                }else {
+                    throw new RuntimeException("预约失败！已达到预约人数上线！");
+                }
             }
-        }else {
-            throw new RuntimeException("未定义的预约时间！");
+            else
+                throw new RuntimeException("插入预约失败！");
+        }catch (Exception e){
+            throw new RuntimeException("插入预约失败：" + e.getMessage());
         }
     }
 

@@ -4,14 +4,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.dao.OrderDao">
     <select id="listAllOrders" resultType="com.example.demo.entity.Order">
-        SELECT order_id, user_id, tb_spot_order_time.spot_id, tb_spot_order_time.start_time, tb_spot_order_time.end_time, order_date, order_status, note, tb_spot.spot_name
+        SELECT order_id, user_id, tb_spot_order_time.spot_id, tb_spot_order_time.start_time, tb_spot_order_time.end_time, order_date, order_status, note, tb_spot.spot_name, tb_spot_order_time.spot_order_time_id
         FROM tb_order, tb_spot, tb_spot_order_time
         WHERE tb_spot.spot_id = tb_spot_order_time.spot_id
         and tb_order.order_time = tb_spot_order_time.spot_order_time_id
         ORDER BY order_date DESC, start_time DESC, end_time DESC
     </select>
     <select id="listUserOrders" resultType="com.example.demo.entity.Order">
-        SELECT order_id, user_id, tb_spot_order_time.spot_id, tb_spot_order_time.start_time, tb_spot_order_time.end_time, order_date, order_status, note, tb_spot.spot_name
+        SELECT order_id, user_id, tb_spot_order_time.spot_id, tb_spot_order_time.start_time, tb_spot_order_time.end_time, order_date, order_status, note, tb_spot.spot_name, tb_spot_order_time.spot_order_time_id
         FROM tb_order, tb_spot, tb_spot_order_time
         WHERE user_id = #{userId}
         and tb_spot.spot_id = tb_spot_order_time.spot_id
@@ -19,7 +19,7 @@
         ORDER BY order_date DESC, start_time DESC, end_time DESC
     </select>
     <select id="listSpotOrders" resultType="com.example.demo.entity.Order">
-        SELECT order_id, user_id, tb_spot_order_time.spot_id, tb_spot_order_time.start_time, tb_spot_order_time.end_time, order_date, order_status, note, tb_spot.spot_name
+        SELECT order_id, user_id, tb_spot_order_time.spot_id, tb_spot_order_time.start_time, tb_spot_order_time.end_time, order_date, order_status, note, tb_spot.spot_name, tb_spot_order_time.spot_order_time_id
         FROM tb_order, tb_spot, tb_spot_order_time
         WHERE tb_spot.spot_id = #{spotId}
         and tb_order.order_time = tb_spot_order_time.spot_order_time_id
@@ -43,11 +43,17 @@
         GROUP BY spot_order_time_id
         ORDER BY start_time ASC;
     </select>
+<!--    <insert id="insertOrder" parameterType="com.example.demo.entity.Order" keyProperty="orderId">-->
+<!--        INSERT INTO-->
+<!--        tb_order(user_id, order_date, order_time, note)-->
+<!--        VALUES-->
+<!--        (#{userId}, #{orderDate}, (SELECT spot_order_time_id FROM tb_spot_order_time WHERE spot_id = #{spotId} and start_time = #{startTime} and end_time = #{endTime}), #{note})-->
+<!--    </insert>-->
     <insert id="insertOrder" parameterType="com.example.demo.entity.Order" keyProperty="orderId">
         INSERT INTO
         tb_order(user_id, order_date, order_time, note)
         VALUES
-        (#{userId}, #{orderDate}, (SELECT spot_order_time_id FROM tb_spot_order_time WHERE spot_id = #{spotId} and start_time = #{startTime} and end_time = #{endTime}), #{note})
+        (#{userId}, #{orderDate}, #{spotOrderTimeId}, #{note})
     </insert>
     <delete id="deleteOrder">
         DELETE FROM tb_order
@@ -63,6 +69,15 @@
         SET order_status = 1
         WHERE order_id = #{orderId}
     </update>
+    <select id="checkOrderPeople" resultType="java.lang.Integer">
+        SELECT tb_spot_order_time.suggested_people > COUNT(CASE
+           WHEN tb_order.order_status = 1 and tb_order.order_date = "2020-06-25"
+               THEN tb_order.order_status
+           END) AS ordered_people
+        FROM tb_spot_order_time LEFT JOIN tb_order on tb_spot_order_time.spot_order_time_id = tb_order.order_time
+        WHERE tb_order.order_id = 3
+        GROUP BY spot_order_time_id
+    </select>
     <update id="disagreeOrder">
         UPDATE tb_order
         SET order_status = 2

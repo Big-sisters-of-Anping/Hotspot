@@ -24,4 +24,6 @@ public interface OrderService {
     boolean cancelOrder(int orderId);
     boolean agreeOrder(int orderId);
     boolean disagreeOrder(int orderId);
+    boolean checkOrderPeople(int orderId, Date orderDate);
+    int insertAndCheckOrder(Order order);
 }

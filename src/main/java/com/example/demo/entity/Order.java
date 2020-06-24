@@ -104,4 +104,8 @@ public class Order {
     public void setEndTime(String endTime) {
         orderTime.setEndTime(endTime);
     }
+
+    public int getSpotOrderTimeId() { return orderTime.getSpotOrderTimeId();}
+
+    public void setSpotOrderTimeId(int spotOrderTimeId) { orderTime.setSpotOrderTimeId(spotOrderTimeId);}
 }
