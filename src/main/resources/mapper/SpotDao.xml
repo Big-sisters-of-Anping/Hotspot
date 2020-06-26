@@ -64,4 +64,9 @@
         FROM tb_user_location
         WHERE user_id = #{userId}
     </select>
+    <select id="searchSpotByName" resultType="com.example.demo.entity.Spot">
+        SELECT spot_id, longitude, latitude, spot_name, realtime_people, suggested_people
+        FROM tb_spot
+        WHERE spot_name REGEXP #{spotName}
+    </select>
 </mapper>

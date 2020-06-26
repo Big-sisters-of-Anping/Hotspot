@@ -18,14 +18,6 @@ public class Spot {
     private Integer suggestedPeople;
     private GlobalCoordinates location = new GlobalCoordinates(0, 0);
 
-//    public void setLocation(GlobalCoordinates location) {
-//        this.location = location;
-//    }
-//
-//    public GlobalCoordinates getLocation() {
-//        return location;
-//    }
-
     public double getLongitude() {
         return location.getLongitude();
     }

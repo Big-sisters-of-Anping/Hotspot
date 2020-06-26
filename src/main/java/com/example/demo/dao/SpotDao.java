@@ -15,6 +15,7 @@ import java.util.List;
 public interface SpotDao {
     List<Spot> listAreaSpots(double minLongitude, double maxLongitude, double minLatitude, double maxLatitude);
     List<Spot> listAllSpots();
+    List<Spot> searchSpotByName(String spotName);
     Spot querySpotById(int spotId);
     int insertSpot(Spot spot);
     int updateSpot(Spot spot);
