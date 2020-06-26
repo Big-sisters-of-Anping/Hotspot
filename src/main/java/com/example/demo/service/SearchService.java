@@ -15,4 +15,5 @@ import java.util.List;
 
 public interface SearchService {
     List<Spot> searchSpotsByName(String spotName);
+    List<Spot> searchSpotsByNameWithLocation(String spotName, double longitude, double latitude);
 }

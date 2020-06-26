@@ -11,11 +11,12 @@ import org.gavaghan.geodesy.GlobalCoordinates;
  * Version 1.0
  */
 
-public class Spot {
+public class Spot{
     private Integer spotId;
     private String spotName;
     private Integer realtimePeople;
     private Integer suggestedPeople;
+    private Double distance;
     private GlobalCoordinates location = new GlobalCoordinates(0, 0);
 
     public double getLongitude() {
@@ -64,5 +65,13 @@ public class Spot {
 
     public void setSuggestedPeople(Integer suggestedPeople) {
         this.suggestedPeople = suggestedPeople;
+    }
+
+    public Double getDistance(){
+        return distance;
+    }
+
+    public void setDistance(double distance){
+        this.distance = distance;
     }
 }

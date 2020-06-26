@@ -30,9 +30,16 @@ public class SearchController {
     private SearchService searchService;
 
     @GetMapping("/searchSpotsByName")
-    @ApiOperation(value = "根据地点名搜索地点", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
+    @ApiOperation(value = "根据地点名正则匹配地点，返回所有匹配的地点的列表", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
     @TokenLimit(CheckToken = false)
     private List<Spot> searchSpotsByName(String spotName){
         return searchService.searchSpotsByName(spotName);
+    }
+
+    @GetMapping("/searchSpotsByNameWithLocation")
+    @ApiOperation(value = "根据地点名正则匹配地点，返回按距离从近到远排序的地点列表", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
+    @TokenLimit(CheckToken = false)
+    private List<Spot> searchSpotsByNameWithLocation(String spotName, double longitude, double latitude){
+        return searchService.searchSpotsByNameWithLocation(spotName, longitude, latitude);
     }
 }
