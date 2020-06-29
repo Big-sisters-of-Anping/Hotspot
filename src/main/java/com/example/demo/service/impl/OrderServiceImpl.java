@@ -27,17 +27,29 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> listAllOrders() {
-        return orderDao.listAllOrders();
+        List<Order> result = orderDao.listAllOrders();
+        for (int i = 0; i < result.size(); ++i){
+            result.get(i).formatTime();
+        }
+        return result;
     }
 
     @Override
     public List<Order> listUserOrders(int userId) {
-        return orderDao.listUserOrders(userId);
+        List<Order> result = orderDao.listUserOrders(userId);
+        for (int i = 0; i < result.size(); ++i){
+            result.get(i).formatTime();
+        }
+        return result;
     }
 
     @Override
     public List<Order> listSpotOrders(int spotId) {
-        return orderDao.listSpotOrders(spotId);
+        List<Order> result = orderDao.listSpotOrders(spotId);
+        for (int i = 0; i < result.size(); ++i){
+            result.get(i).formatTime();
+        }
+        return result;
     }
 
     @Override

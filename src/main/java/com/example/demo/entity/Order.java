@@ -108,4 +108,8 @@ public class Order {
     public int getSpotOrderTimeId() { return orderTime.getSpotOrderTimeId();}
 
     public void setSpotOrderTimeId(int spotOrderTimeId) { orderTime.setSpotOrderTimeId(spotOrderTimeId);}
+
+    public void formatTime(){
+        this.orderTime.formatTime();
+    }
 }

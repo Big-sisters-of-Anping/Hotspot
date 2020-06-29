@@ -9,7 +9,7 @@ info:
     description:
       热力图服务
     termsOfServiceUrl:
-      http://localhost:8080/swagger-ui.html
+      http://47.104.248.28:8080/swagger-ui.html
     contact:
       Wang Qingyue
     version:
@@ -26,7 +26,7 @@ jdbc:
   driver:
     com.mysql.jdbc.Driver
   url:
-    jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true&&serverTimezone=Asia/Shanghai
+    jdbc:mysql://47.104.248.28:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true&&serverTimezone=Asia/Shanghai
   username:
     root
   password:

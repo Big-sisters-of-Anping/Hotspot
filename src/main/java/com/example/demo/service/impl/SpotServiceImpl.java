@@ -3,7 +3,6 @@ package com.example.demo.service.impl;
 import com.example.demo.dao.SpotDao;
 import com.example.demo.entity.Spot;
 import com.example.demo.service.SpotService;
-import io.swagger.models.auth.In;
 import org.gavaghan.geodesy.Ellipsoid;
 import org.gavaghan.geodesy.GeodeticCalculator;
 import org.gavaghan.geodesy.GeodeticCurve;
