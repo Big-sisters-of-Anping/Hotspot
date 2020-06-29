@@ -12,6 +12,11 @@ import java.sql.Date;
  */
 
 public class SpotOrderTime {
+    static public String formatTimeHHMM(String time){
+        String[] parts = time.split(":");
+        return parts[0] + ":" + parts[1];
+    }
+
     private Integer spotOrderTimeId;
     private Integer spotId;
     private String spotName;
@@ -74,5 +79,10 @@ public class SpotOrderTime {
 
     public void setSpotName(String spotName) {
         this.spotName = spotName;
+    }
+
+    public void formatTime(){
+        this.startTime = formatTimeHHMM(startTime);
+        this.endTime = formatTimeHHMM(endTime);
     }
 }

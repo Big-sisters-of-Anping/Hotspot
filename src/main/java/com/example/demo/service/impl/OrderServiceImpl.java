@@ -42,8 +42,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<SpotOrderTime> listSpotOrderTime(int spotId, Date date) {
-        System.out.print(date);
-        return orderDao.listSpotOrderTime(spotId,date);
+        List<SpotOrderTime> result = orderDao.listSpotOrderTime(spotId,date);
+        for (int i = 0; i < result.size(); ++i){
+            result.get(i).formatTime();
+        }
+        return result;
     }
 
     @Transactional
