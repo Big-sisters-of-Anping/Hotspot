@@ -75,7 +75,7 @@
                THEN tb_order.order_status
            END) AS ordered_people
         FROM tb_spot_order_time LEFT JOIN tb_order on tb_spot_order_time.spot_order_time_id = tb_order.order_time
-        WHERE tb_order.order_id = 3
+        WHERE tb_order.order_id = #{orderId}
         GROUP BY spot_order_time_id
     </select>
     <update id="disagreeOrder">
