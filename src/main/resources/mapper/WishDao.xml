@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.WishDao">
+    <select id="listAllWishes" resultType="com.example.demo.entity.Wish">
+        SELECT wish_id, user_id, tb_spot_wish_time.spot_id, tb_spot_wish_time.start_time,
+            tb_spot_wish_time.end_time, wish_date, tb_spot.spot_name, tb_spot_wish_time.spot_wish_time_id
+        FROM tb_wish, tb_spot, tb_spot_wish_time
+        WHERE tb_spot.spot_id = tb_spot_wish_time.spot_id
+        and tb_wish.wish_time = tb_spot_wish_time.spot_wish_time_id
+        ORDER BY wish_date DESC, start_time DESC, end_time DESC
+    </select>
+    <select id="listUserWishes" resultType="com.example.demo.entity.Wish">
+        SELECT wish_id, user_id, tb_spot_wish_time.spot_id, tb_spot_wish_time.start_time,
+            tb_spot_wish_time.end_time, wish_date, tb_spot.spot_name, tb_spot_wish_time.spot_wish_time_id
+        FROM tb_wish, tb_spot, tb_spot_wish_time
+        WHERE user_id = #{userId}
+        and tb_spot.spot_id = tb_spot_wish_time.spot_id
+        and tb_wish.wish_time = tb_spot_wish_time.spot_wish_time_id
+        ORDER BY wish_date DESC, start_time DESC, end_time DESC
+    </select>
+    <select id="listSpotWishTime" resultType="com.example.demo.entity.SpotWishTime">
+        SELECT tb_spot_wish_time.spot_id,
+               tb_spot.spot_name,
+               tb_spot_wish_time.spot_wish_time_id,
+               tb_spot_wish_time.start_time,
+               tb_spot_wish_time.end_time
+        FROM tb_spot, tb_spot_wish_time LEFT JOIN tb_wish on tb_spot_wish_time.spot_wish_time_id = tb_wish.wish_time
+        WHERE tb_spot.spot_id = #{spotId}
+          and tb_spot.spot_id = tb_spot_wish_time.spot_id
+        GROUP BY spot_wish_time_id
+        ORDER BY start_time ASC;
+    </select>
+    <insert id="insertWish" parameterType="com.example.demo.entity.Wish" keyProperty="wishId">
+        INSERT INTO
+        tb_wish(user_id, wish_date, wish_time)
+        VALUES
+        (#{userId}, #{wishDate}, #{spotWishTimeId})
+    </insert>
+    <delete id="cancelWish">
+        DELETE FROM tb_wish
+        WHERE wish_id = #{wishId}
+    </delete>
+</mapper>

@@ -16,6 +16,7 @@ public class Spot{
     private String spotName;
     private Integer realtimePeople;
     private Integer suggestedPeople;
+    private Integer spotType;
     private Double distance;
     private GlobalCoordinates location = new GlobalCoordinates(0, 0);
 
@@ -73,5 +74,13 @@ public class Spot{
 
     public void setDistance(double distance){
         this.distance = distance;
+    }
+
+    public Integer getSpotType() {
+        return spotType;
+    }
+
+    public void setSpotType(Integer spotType) {
+        this.spotType = spotType;
     }
 }

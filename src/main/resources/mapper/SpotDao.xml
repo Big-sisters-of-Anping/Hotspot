@@ -4,27 +4,27 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.dao.SpotDao">
     <select id="listAllSpots" resultType="com.example.demo.entity.Spot">
-        SELECT spot_id, longitude, latitude, spot_name, realtime_people, suggested_people
+        SELECT spot_id, longitude, latitude, spot_name, spot_type, realtime_people, suggested_people
         FROM tb_spot
         ORDER BY longitude ASC, latitude ASC
     </select>
     <select id="listAreaSpots" resultType="com.example.demo.entity.Spot">
-        SELECT spot_id, longitude, latitude, spot_name, realtime_people, suggested_people
+        SELECT spot_id, longitude, latitude, spot_name, spot_type, realtime_people, suggested_people
         FROM tb_spot
         WHERE longitude between #{minLongitude} and #{maxLongitude}
         and latitude between #{minLatitude} and #{maxLatitude}
         ORDER BY longitude ASC, latitude ASC
     </select>
     <select id="querySpotById" resultType="com.example.demo.entity.Spot">
-        SELECT spot_id, longitude, latitude, spot_name, realtime_people, suggested_people
+        SELECT spot_id, longitude, latitude, spot_name, spot_type, realtime_people, suggested_people
         FROM tb_spot
         WHERE spot_id = #{spotId}
     </select>
     <insert id="insertSpot" parameterType="com.example.demo.entity.Spot" keyProperty="spotId">
         INSERT INTO
-        tb_spot(spot_name, longitude, latitude, suggested_people)
+        tb_spot(spot_name, longitude, latitude, suggested_people<if test="spotType != null">, spot_type</if>)
         VALUES
-        (#{spotName}, #{longitude}, #{latitude}, #{suggestedPeople})
+        (#{spotName}, #{longitude}, #{latitude}, #{suggestedPeople}<if test="spotType != null">, #{spotType}</if>)
     </insert>
     <update id="updateSpot" parameterType="com.example.demo.entity.Spot">
         UPDATE tb_spot
@@ -65,7 +65,7 @@
         WHERE user_id = #{userId}
     </select>
     <select id="searchSpotByName" resultType="com.example.demo.entity.Spot">
-        SELECT spot_id, longitude, latitude, spot_name, realtime_people, suggested_people
+        SELECT spot_id, longitude, latitude, spot_name, spot_type, realtime_people, suggested_people
         FROM tb_spot
         WHERE spot_name REGEXP #{spotName}
     </select>
