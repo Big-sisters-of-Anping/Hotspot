@@ -50,11 +50,18 @@ public class OrderController {
         return orderService.listSpotOrders(spotId);
     }
 
-    @ApiOperation(value = "列出某地某天的预约时间列表", notes = "注意：日期格式为\"yyyy-mm-dd\"\n特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
+    @ApiOperation(value = "列出某地某天的预约时间列表", notes = "注意：日期格式为\"yyyy-mm-dd\"\n返回字段：orderId, userId, orderStatus （按订单生成时间升序排列）\n特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
     @GetMapping(value = "/listSpotOrderTime")
     @TokenLimit(CheckToken = false)
     private List<SpotOrderTime> listSpotOrderTime(int spotId, Date date) {
         return orderService.listSpotOrderTime(spotId, date);
+    }
+
+    @ApiOperation(value = "列出某天某地某时段的所有预约", notes = "注意：日期格式为\"yyyy-mm-dd\"\n特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
+    @GetMapping(value = "/listOrdersBySpotTime")
+    @TokenLimit(CheckToken = false)
+    private List<Order> listOrdersBySpotTime(int spotOrderTimeId, Date date){
+        return orderService.listOrdersBySpotTime(spotOrderTimeId, date);
     }
 
     @ApiOperation(value = "新增预约", notes = "返回预约Id\n需要传入userId、orderDate、spotOrderTimeId、note(可为空字符串)\n注意：日期格式为\"yyyy-mm-dd\"\n特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger

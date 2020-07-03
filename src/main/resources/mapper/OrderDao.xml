@@ -3,28 +3,66 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.dao.OrderDao">
-    <select id="listAllOrders" resultType="com.example.demo.entity.Order">
-        SELECT order_id, user_id, tb_spot_order_time.spot_id, tb_spot_order_time.start_time, tb_spot_order_time.end_time, order_date, order_status, note, tb_spot.spot_name, tb_spot_order_time.spot_order_time_id
+    <resultMap type="com.example.demo.entity.Order" id="Order">
+        <result column="order_id" jdbcType="INTEGER" property="orderId" />
+        <result column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="order_date" jdbcType="DATE" property="orderDate" />
+        <result column="order_status" jdbcType="INTEGER" property="orderStatus" />
+        <result column="note" jdbcType="VARCHAR" property="note" />
+        <association property="orderTime" javaType="com.example.demo.entity.SpotOrderTime">
+            <result column="spot_order_time_id" jdbcType="INTEGER" property="spotOrderTimeId" />
+            <result column="spot_id" jdbcType="INTEGER" property="spotId" />
+            <result column="spot_name" jdbcType="VARCHAR" property="spotName" />
+            <result column="start_time" jdbcType="TIME" property="startTime" />
+            <result column="end_time" jdbcType="TIME" property="endTime" />
+            <result column="suggested_people" jdbcType="INTEGER" property="suggestedPeople" />
+            <result column="ordered_people" jdbcType="INTEGER" property="orderedPeople" />
+        </association>
+    </resultMap>
+    <parameterMap id="ParamOrder" type="com.example.demo.entity.Order">
+        <parameter property="orderId" resultMap="Order" />
+        <parameter property="userId" resultMap="Order" />
+        <parameter property="orderDate" resultMap="Order" />
+        <parameter property="orderStatus" resultMap="Order" />
+        <parameter property="note" resultMap="Order" />
+        <parameter property="orderTime.spotOrderTimeId" resultMap="Order" />
+        <parameter property="orderTime.spotId" resultMap="Order" />
+        <parameter property="orderTime.spotName" resultMap="Order" />
+        <parameter property="orderTime.startTime" resultMap="Order" />
+        <parameter property="orderTime.endTime" resultMap="Order" />
+        <parameter property="orderTime.suggestedPeople" resultMap="Order" />
+        <parameter property="orderTime.orderedPeople" resultMap="Order" />
+    </parameterMap>
+    <select id="listAllOrders" resultMap="Order">
+        SELECT order_id, user_id, order_date, order_status, note, tb_spot_order_time.spot_order_time_id, tb_spot_order_time.spot_id, tb_spot.spot_name, tb_spot_order_time.start_time, tb_spot_order_time.end_time
         FROM tb_order, tb_spot, tb_spot_order_time
         WHERE tb_spot.spot_id = tb_spot_order_time.spot_id
         and tb_order.order_time = tb_spot_order_time.spot_order_time_id
-        ORDER BY order_date DESC, start_time DESC, end_time DESC
+        ORDER BY order_date DESC, start_time DESC, end_time DESC;
     </select>
-    <select id="listUserOrders" resultType="com.example.demo.entity.Order">
+    <select id="listUserOrders" resultMap="Order">
         SELECT order_id, user_id, tb_spot_order_time.spot_id, tb_spot_order_time.start_time, tb_spot_order_time.end_time, order_date, order_status, note, tb_spot.spot_name, tb_spot_order_time.spot_order_time_id
         FROM tb_order, tb_spot, tb_spot_order_time
         WHERE user_id = #{userId}
         and tb_spot.spot_id = tb_spot_order_time.spot_id
         and tb_order.order_time = tb_spot_order_time.spot_order_time_id
-        ORDER BY order_date DESC, start_time DESC, end_time DESC
+        ORDER BY order_date DESC, start_time DESC, end_time DESC;
     </select>
-    <select id="listSpotOrders" resultType="com.example.demo.entity.Order">
+    <select id="listSpotOrders" resultMap="Order">
         SELECT order_id, user_id, tb_spot_order_time.spot_id, tb_spot_order_time.start_time, tb_spot_order_time.end_time, order_date, order_status, note, tb_spot.spot_name, tb_spot_order_time.spot_order_time_id
         FROM tb_order, tb_spot, tb_spot_order_time
         WHERE tb_spot.spot_id = #{spotId}
         and tb_order.order_time = tb_spot_order_time.spot_order_time_id
         and tb_spot.spot_id = tb_spot_order_time.spot_id
-        ORDER BY order_date DESC, start_time DESC, end_time DESC
+        ORDER BY order_date DESC, start_time DESC, end_time DESC;
+    </select>
+    <select id="listOrdersBySpotTime" resultMap="Order">
+        SELECT order_id, user_id, order_status
+        FROM tb_order, tb_spot_order_time
+        WHERE tb_spot_order_time.spot_order_time_id = #{spotOrderTimeId}
+        and tb_order.order_date = #{orderDate}
+        and tb_order.order_time = tb_spot_order_time.spot_order_time_id
+        ORDER BY order_id ASC, order_status ASC;
     </select>
     <select id="listSpotOrderTime" resultType="com.example.demo.entity.SpotOrderTime">
         SELECT tb_spot_order_time.spot_id,
@@ -43,31 +81,25 @@
         GROUP BY spot_order_time_id
         ORDER BY start_time ASC;
     </select>
-<!--    <insert id="insertOrder" parameterType="com.example.demo.entity.Order" keyProperty="orderId">-->
-<!--        INSERT INTO-->
-<!--        tb_order(user_id, order_date, order_time, note)-->
-<!--        VALUES-->
-<!--        (#{userId}, #{orderDate}, (SELECT spot_order_time_id FROM tb_spot_order_time WHERE spot_id = #{spotId} and start_time = #{startTime} and end_time = #{endTime}), #{note})-->
-<!--    </insert>-->
-    <insert id="insertOrder" parameterType="com.example.demo.entity.Order" keyProperty="orderId">
+    <insert id="insertOrder" parameterMap="ParamOrder" keyProperty="orderId">
         INSERT INTO
         tb_order(user_id, order_date, order_time, note)
         VALUES
-        (#{userId}, #{orderDate}, #{spotOrderTimeId}, #{note})
+        (#{userId}, #{orderDate}, #{orderTime.spotOrderTimeId}, #{note});
     </insert>
     <delete id="deleteOrder">
         DELETE FROM tb_order
-        WHERE order_id = #{orderId}
+        WHERE order_id = #{orderId};
     </delete>
     <update id="cancelOrder">
         UPDATE tb_order
         SET order_status = 3
-        WHERE order_id = #{orderId}
+        WHERE order_id = #{orderId};
     </update>
     <update id="agreeOrder">
         UPDATE tb_order
         SET order_status = 1
-        WHERE order_id = #{orderId}
+        WHERE order_id = #{orderId};
     </update>
     <select id="checkOrderPeople" resultType="java.lang.Integer">
         SELECT tb_spot_order_time.suggested_people > COUNT(CASE
@@ -76,11 +108,11 @@
            END) AS ordered_people
         FROM tb_spot_order_time LEFT JOIN tb_order on tb_spot_order_time.spot_order_time_id = tb_order.order_time
         WHERE tb_order.order_id = #{orderId}
-        GROUP BY spot_order_time_id
+        GROUP BY spot_order_time_id;
     </select>
     <update id="disagreeOrder">
         UPDATE tb_order
         SET order_status = 2
-        WHERE order_id = #{orderId}
+        WHERE order_id = #{orderId};
     </update>
 </mapper>

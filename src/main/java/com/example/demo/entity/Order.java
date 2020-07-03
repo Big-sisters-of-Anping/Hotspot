@@ -1,5 +1,8 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
 /**
@@ -11,11 +14,23 @@ import java.sql.Date;
  * Version 1.0
  */
 public class Order {
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private int orderId;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private int userId;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Date orderDate;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private SpotOrderTime orderTime = new SpotOrderTime();
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private int orderStatus;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String note;
 
     public int getOrderId() {
@@ -32,14 +47,6 @@ public class Order {
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    public int getSpotId() {
-        return orderTime.getSpotId();
-    }
-
-    public void setSpotId(int spotId) {
-        this.orderTime.setSpotId(spotId);
     }
 
     public String statusToString(){
@@ -73,14 +80,6 @@ public class Order {
         return orderStatus;
     }
 
-    public String getSpotName() {
-        return orderTime.getSpotName();
-    }
-
-    public void setSpotName(String spotName) {
-        orderTime.setSpotName(spotName);
-    }
-
     public Date getOrderDate() {
         return orderDate;
     }
@@ -89,27 +88,52 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public String getStartTime() {
-        return orderTime.getStartTime();
-    }
-
-    public void setStartTime(String startTime) {
-        orderTime.setStartTime(startTime);
-    }
-
-    public String getEndTime() {
-        return orderTime.getEndTime();
-    }
-
-    public void setEndTime(String endTime) {
-        orderTime.setEndTime(endTime);
-    }
-
-    public int getSpotOrderTimeId() { return orderTime.getSpotOrderTimeId();}
-
-    public void setSpotOrderTimeId(int spotOrderTimeId) { orderTime.setSpotOrderTimeId(spotOrderTimeId);}
+//    public int getSpotId() {
+//        return orderTime.getSpotId();
+//    }
+//
+//    public void setSpotId(int spotId) {
+//        this.orderTime.setSpotId(spotId);
+//    }
+//
+//    public String getSpotName() {
+//        return orderTime.getSpotName();
+//    }
+//
+//    public void setSpotName(String spotName) {
+//        orderTime.setSpotName(spotName);
+//    }
+//
+//
+//    public String getStartTime() {
+//        return orderTime.getStartTime();
+//    }
+//
+//    public void setStartTime(String startTime) {
+//        orderTime.setStartTime(startTime);
+//    }
+//
+//    public String getEndTime() {
+//        return orderTime.getEndTime();
+//    }
+//
+//    public void setEndTime(String endTime) {
+//        orderTime.setEndTime(endTime);
+//    }
+//
+//    public int getSpotOrderTimeId() { return orderTime.getSpotOrderTimeId();}
+//
+//    public void setSpotOrderTimeId(int spotOrderTimeId) { orderTime.setSpotOrderTimeId(spotOrderTimeId);}
 
     public void formatTime(){
         this.orderTime.formatTime();
+    }
+
+    public SpotOrderTime getOrderTime() {
+        return orderTime;
+    }
+
+    public void setOrderTime(SpotOrderTime orderTime) {
+        this.orderTime = orderTime;
     }
 }

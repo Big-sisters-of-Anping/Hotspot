@@ -53,6 +53,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> listOrdersBySpotTime(int spotOrderTimeId, Date date) {
+        return orderDao.listOrdersBySpotTime(spotOrderTimeId, date);
+    }
+
+
+    @Override
     public List<SpotOrderTime> listSpotOrderTime(int spotId, Date date) {
         List<SpotOrderTime> result = orderDao.listSpotOrderTime(spotId,date);
         for (int i = 0; i < result.size(); ++i){

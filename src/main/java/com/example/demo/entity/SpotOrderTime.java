@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 /**
  * 类名称: SpotOrderTime
  * 类描述: 某地可预约时间表 实体类
@@ -10,17 +12,31 @@ package com.example.demo.entity;
  */
 
 public class SpotOrderTime {
-    static public String formatTimeHHMM(String time){
+    public static String formatTimeHHMM(String time){
+        if (time == null || "".equals(time)) return null;
         String[] parts = time.split(":");
         return parts[0] + ":" + parts[1];
     }
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer spotOrderTimeId;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer spotId;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String spotName;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String startTime;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String endTime;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer suggestedPeople;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer orderedPeople;
 
     public Integer getSpotOrderTimeId() {
