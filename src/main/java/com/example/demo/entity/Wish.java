@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.sql.Date;
 
 /**
@@ -12,9 +14,17 @@ import java.sql.Date;
  */
 
 public class Wish {
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private int wishId;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private int userId;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Date wishDate;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private SpotWishTime wishTime = new SpotWishTime();
 
     public int getWishId() {
@@ -41,33 +51,13 @@ public class Wish {
         this.wishDate = wishDate;
     }
 
-    public String getStartTime() {
-        return wishTime.getStartTime();
+    public SpotWishTime getWishTime() {
+        return wishTime;
     }
 
-    public String getSpotName() {
-        return wishTime.getSpotName();
+    public void setWishTime(SpotWishTime wishTime) {
+        this.wishTime = wishTime;
     }
-
-    public void setSpotName(String spotName) {
-        wishTime.setSpotName(spotName);
-    }
-
-    public void setStartTime(String startTime) {
-        wishTime.setStartTime(startTime);
-    }
-
-    public String getEndTime() {
-        return wishTime.getEndTime();
-    }
-
-    public void setEndTime(String endTime) {
-        wishTime.setEndTime(endTime);
-    }
-
-    public int getSpotWishTimeId() { return wishTime.getSpotWishTimeId();}
-
-    public void setSpotWishTimeId(int spotWishTimeId) { wishTime.setSpotWishTimeId(spotWishTimeId);}
 
     public void formatTime(){
         this.wishTime.formatTime();

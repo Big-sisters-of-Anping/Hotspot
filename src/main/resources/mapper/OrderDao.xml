@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.dao.OrderDao">
-    <resultMap type="com.example.demo.entity.Order" id="Order">
+    <resultMap type="com.example.demo.entity.Order" id="ResultOrder">
         <result column="order_id" jdbcType="INTEGER" property="orderId" />
         <result column="user_id" jdbcType="INTEGER" property="userId" />
         <result column="order_date" jdbcType="DATE" property="orderDate" />
@@ -20,27 +20,27 @@
         </association>
     </resultMap>
     <parameterMap id="ParamOrder" type="com.example.demo.entity.Order">
-        <parameter property="orderId" resultMap="Order" />
-        <parameter property="userId" resultMap="Order" />
-        <parameter property="orderDate" resultMap="Order" />
-        <parameter property="orderStatus" resultMap="Order" />
-        <parameter property="note" resultMap="Order" />
-        <parameter property="orderTime.spotOrderTimeId" resultMap="Order" />
-        <parameter property="orderTime.spotId" resultMap="Order" />
-        <parameter property="orderTime.spotName" resultMap="Order" />
-        <parameter property="orderTime.startTime" resultMap="Order" />
-        <parameter property="orderTime.endTime" resultMap="Order" />
-        <parameter property="orderTime.suggestedPeople" resultMap="Order" />
-        <parameter property="orderTime.orderedPeople" resultMap="Order" />
+        <parameter property="orderId" resultMap="ResultOrder" />
+        <parameter property="userId" resultMap="ResultOrder" />
+        <parameter property="orderDate" resultMap="ResultOrder" />
+        <parameter property="orderStatus" resultMap="ResultOrder" />
+        <parameter property="note" resultMap="ResultOrder" />
+        <parameter property="orderTime.spotOrderTimeId" resultMap="ResultOrder" />
+        <parameter property="orderTime.spotId" resultMap="ResultOrder" />
+        <parameter property="orderTime.spotName" resultMap="ResultOrder" />
+        <parameter property="orderTime.startTime" resultMap="ResultOrder" />
+        <parameter property="orderTime.endTime" resultMap="ResultOrder" />
+        <parameter property="orderTime.suggestedPeople" resultMap="ResultOrder" />
+        <parameter property="orderTime.orderedPeople" resultMap="ResultOrder" />
     </parameterMap>
-    <select id="listAllOrders" resultMap="Order">
+    <select id="listAllOrders" resultMap="ResultOrder">
         SELECT order_id, user_id, order_date, order_status, note, tb_spot_order_time.spot_order_time_id, tb_spot_order_time.spot_id, tb_spot.spot_name, tb_spot_order_time.start_time, tb_spot_order_time.end_time
         FROM tb_order, tb_spot, tb_spot_order_time
         WHERE tb_spot.spot_id = tb_spot_order_time.spot_id
         and tb_order.order_time = tb_spot_order_time.spot_order_time_id
         ORDER BY order_date DESC, start_time DESC, end_time DESC;
     </select>
-    <select id="listUserOrders" resultMap="Order">
+    <select id="listUserOrders" resultMap="ResultOrder">
         SELECT order_id, user_id, tb_spot_order_time.spot_id, tb_spot_order_time.start_time, tb_spot_order_time.end_time, order_date, order_status, note, tb_spot.spot_name, tb_spot_order_time.spot_order_time_id
         FROM tb_order, tb_spot, tb_spot_order_time
         WHERE user_id = #{userId}
@@ -48,7 +48,7 @@
         and tb_order.order_time = tb_spot_order_time.spot_order_time_id
         ORDER BY order_date DESC, start_time DESC, end_time DESC;
     </select>
-    <select id="listSpotOrders" resultMap="Order">
+    <select id="listSpotOrders" resultMap="ResultOrder">
         SELECT order_id, user_id, tb_spot_order_time.spot_id, tb_spot_order_time.start_time, tb_spot_order_time.end_time, order_date, order_status, note, tb_spot.spot_name, tb_spot_order_time.spot_order_time_id
         FROM tb_order, tb_spot, tb_spot_order_time
         WHERE tb_spot.spot_id = #{spotId}
@@ -56,7 +56,7 @@
         and tb_spot.spot_id = tb_spot_order_time.spot_id
         ORDER BY order_date DESC, start_time DESC, end_time DESC;
     </select>
-    <select id="listOrdersBySpotTime" resultMap="Order">
+    <select id="listOrdersBySpotTime" resultMap="ResultOrder">
         SELECT order_id, user_id, order_status
         FROM tb_order, tb_spot_order_time
         WHERE tb_spot_order_time.spot_order_time_id = #{spotOrderTimeId}

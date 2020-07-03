@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 /**
  * 类名称: SpotWishTime
  * 类描述: // TODO
@@ -11,14 +13,24 @@ package com.example.demo.entity;
 
 public class SpotWishTime {
     static public String formatTimeHHMM(String time){
+        if (time == null || "".equals(time)) return null;
         String[] parts = time.split(":");
         return parts[0] + ":" + parts[1];
     }
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer spotWishTimeId;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer spotId;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String spotName;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String startTime;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String endTime;
 
     public Integer getSpotId() {

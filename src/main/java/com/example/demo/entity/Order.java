@@ -88,43 +88,6 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-//    public int getSpotId() {
-//        return orderTime.getSpotId();
-//    }
-//
-//    public void setSpotId(int spotId) {
-//        this.orderTime.setSpotId(spotId);
-//    }
-//
-//    public String getSpotName() {
-//        return orderTime.getSpotName();
-//    }
-//
-//    public void setSpotName(String spotName) {
-//        orderTime.setSpotName(spotName);
-//    }
-//
-//
-//    public String getStartTime() {
-//        return orderTime.getStartTime();
-//    }
-//
-//    public void setStartTime(String startTime) {
-//        orderTime.setStartTime(startTime);
-//    }
-//
-//    public String getEndTime() {
-//        return orderTime.getEndTime();
-//    }
-//
-//    public void setEndTime(String endTime) {
-//        orderTime.setEndTime(endTime);
-//    }
-//
-//    public int getSpotOrderTimeId() { return orderTime.getSpotOrderTimeId();}
-//
-//    public void setSpotOrderTimeId(int spotOrderTimeId) { orderTime.setSpotOrderTimeId(spotOrderTimeId);}
-
     public void formatTime(){
         this.orderTime.formatTime();
     }
