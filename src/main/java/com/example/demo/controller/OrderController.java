@@ -2,16 +2,17 @@ package com.example.demo.controller;
 
 import com.example.demo.controller.annotation.TokenLimit;
 import com.example.demo.entity.Order;
+import com.example.demo.entity.Spot;
 import com.example.demo.entity.SpotOrderTime;
 import com.example.demo.service.OrderService;
+import com.example.demo.service.SpotService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * 类名称: OrderController
@@ -28,6 +29,8 @@ import java.util.List;
 public class OrderController {
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private SpotService spotService;
 
     @ApiOperation(value = "列出所有预约", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger
     @GetMapping(value = "/listAllOrders")
@@ -104,5 +107,21 @@ public class OrderController {
     @TokenLimit(CheckToken = false)
     private boolean disagreeOrder(int orderId){
         return orderService.disagreeOrder(orderId);
+    }
+
+    @ApiOperation(value = "列出所有可预约地点的可预约信息", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger
+    @GetMapping(value = "/listAllOrderSpotInfo")
+    @TokenLimit(CheckToken = false)
+    private List<Spot> listAllOrderSpotInfo(){
+        List<Spot> tmp = spotService.listAllSpots();
+        List<Spot> result = new ArrayList<Spot>();
+        for (int i = 0; i < tmp.size(); ++i){
+            if (tmp.get(i).getSpotType() == 1){
+                List<SpotOrderTime> curr = orderService.listSpotOrderTime(tmp.get(i).getSpotId(), new Date(System.currentTimeMillis()));
+                tmp.get(i).setSpotOrderTimeList(curr);
+                result.add(tmp.get(i));
+            }
+        }
+        return result;
     }
 }

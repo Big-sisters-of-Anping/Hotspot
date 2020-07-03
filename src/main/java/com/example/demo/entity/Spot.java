@@ -1,6 +1,9 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.gavaghan.geodesy.GlobalCoordinates;
+
+import java.util.List;
 
 /**
  * 类名称: Spot
@@ -12,13 +15,29 @@ import org.gavaghan.geodesy.GlobalCoordinates;
  */
 
 public class Spot{
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer spotId;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String spotName;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer realtimePeople;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer suggestedPeople;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer spotType;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Double distance;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private GlobalCoordinates location = new GlobalCoordinates(0, 0);
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<SpotOrderTime> spotOrderTimeList;
 
     public double getLongitude() {
         return location.getLongitude();
@@ -82,5 +101,13 @@ public class Spot{
 
     public void setSpotType(Integer spotType) {
         this.spotType = spotType;
+    }
+
+    public List<SpotOrderTime> getSpotOrderTimeList() {
+        return spotOrderTimeList;
+    }
+
+    public void setSpotOrderTimeList(List<SpotOrderTime> spotOrderTimeList) {
+        this.spotOrderTimeList = spotOrderTimeList;
     }
 }
