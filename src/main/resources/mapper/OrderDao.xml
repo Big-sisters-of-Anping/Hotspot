@@ -64,6 +64,16 @@
         and tb_order.order_time = tb_spot_order_time.spot_order_time_id
         ORDER BY order_id ASC, order_status ASC;
     </select>
+    <select id="listOrdersOfRangeDays" resultMap="ResultOrder">
+        SELECT order_id, user_id, tb_spot_order_time.spot_id, tb_spot_order_time.start_time, tb_spot_order_time.end_time, order_date, order_status, note, tb_spot.spot_name, tb_spot_order_time.spot_order_time_id
+        FROM tb_order, tb_spot, tb_spot_order_time
+        WHERE tb_spot.spot_id = #{spotId}
+        and tb_order.order_time = tb_spot_order_time.spot_order_time_id
+        and tb_spot.spot_id = tb_spot_order_time.spot_id
+        and tb_order.order_date between #{startDate} and #{endDate}
+        and tb_order.order_status = #{orderStatus}
+        ORDER BY order_date DESC, start_time DESC, end_time DESC;
+    </select>
     <select id="listSpotOrderTime" resultType="com.example.demo.entity.SpotOrderTime">
         SELECT tb_spot_order_time.spot_id,
                tb_spot.spot_name,

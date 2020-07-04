@@ -7,6 +7,7 @@ import com.example.demo.entity.SpotOrderTime;
 import com.example.demo.service.OrderService;
 import com.example.demo.service.SpotService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -53,18 +54,28 @@ public class OrderController {
         return orderService.listSpotOrders(spotId);
     }
 
-    @ApiOperation(value = "列出某地某天的预约时间列表", notes = "注意：日期格式为\"yyyy-mm-dd\"\n返回字段：orderId, userId, orderStatus （按订单生成时间升序排列）\n特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
+    @ApiOperation(value = "列出某地某天的预约时间列表", notes = "返回字段：orderId, userId, orderStatus （按订单生成时间升序排列）\n特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
+    @ApiImplicitParam(name = "date", value = "预约日期\n日期格式为\"yyyy-mm-dd\"")
     @GetMapping(value = "/listSpotOrderTime")
     @TokenLimit(CheckToken = false)
     private List<SpotOrderTime> listSpotOrderTime(int spotId, Date date) {
         return orderService.listSpotOrderTime(spotId, date);
     }
 
-    @ApiOperation(value = "列出某天某地某时段的所有预约", notes = "注意：日期格式为\"yyyy-mm-dd\"\n特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
+    @ApiOperation(value = "列出某天某地某时段的所有预约", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
+    @ApiImplicitParam(name = "date", value = "预约日期\n日期格式为\"yyyy-mm-dd\"")
     @GetMapping(value = "/listOrdersBySpotTime")
     @TokenLimit(CheckToken = false)
     private List<Order> listOrdersBySpotTime(int spotOrderTimeId, Date date){
         return orderService.listOrdersBySpotTime(spotOrderTimeId, date);
+    }
+
+    @ApiOperation(value = "列出最近三天某地的某状态预约", notes = "\n特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
+    @ApiImplicitParam(value = "预约状态：\"0\"-未处理，\"1\"-通过，\"2\"-未通过", name = "orderStatus")
+    @GetMapping(value = "/listOrdersOfLastThreeDays")
+    @TokenLimit(CheckToken = false)
+    private List<Order> listOrdersOfTheseThreeDays(int spotId, int orderStatus){
+        return orderService.listOrdersOfTheseThreeDays(spotId, orderStatus);
     }
 
     @ApiOperation(value = "新增预约", notes = "返回预约Id\n需要传入userId、orderDate、spotOrderTimeId、note(可为空字符串)\n注意：日期格式为\"yyyy-mm-dd\"\n特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger
