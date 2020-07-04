@@ -71,7 +71,7 @@ public class OrderController {
     }
 
     @ApiOperation(value = "列出最近三天某地的某状态预约", notes = "\n特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
-    @ApiImplicitParam(value = "预约状态：\"0\"-未处理，\"1\"-通过，\"2\"-未通过", name = "orderStatus")
+    @ApiImplicitParam(value = "预约状态：0-未处理，1-通过，2-未通过", name = "orderStatus")
     @GetMapping(value = "/listOrdersOfLastThreeDays")
     @TokenLimit(CheckToken = false)
     private List<Order> listOrdersOfTheseThreeDays(int spotId, int orderStatus){

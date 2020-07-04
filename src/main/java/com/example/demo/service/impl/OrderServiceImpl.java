@@ -61,8 +61,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> listOrdersOfTheseThreeDays(int spotId, int orderStatus) {
         Date endDate = new Date(System.currentTimeMillis());
-        Date startDate = java.sql.Date.valueOf(LocalDate.now().minusDays(3));
-        System.out.print(startDate + "-" + "endDate");
+        Date startDate = java.sql.Date.valueOf(LocalDate.now().minusDays(2));
+        System.out.print(startDate + "-" + endDate);
         return orderDao.listOrdersOfRangeDays(spotId, orderStatus, startDate, endDate);
     }
 
