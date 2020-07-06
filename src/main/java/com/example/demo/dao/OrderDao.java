@@ -26,5 +26,6 @@ public interface OrderDao {
     int cancelOrder(int orderId);
     int agreeOrder(int orderId);
     int disagreeOrder(int orderId);
-    int checkOrderPeople(int orderId, Date orderDate);
+    int getOrderedPeopleByOrderId(int orderId, Date orderDate);
+    int getOrderedPeopleByOrderTimeId(int spotOrderTimeId, Date date);
 }

@@ -41,7 +41,11 @@
         ORDER BY order_date DESC, start_time DESC, end_time DESC;
     </select>
     <select id="listUserOrders" resultMap="ResultOrder">
-        SELECT order_id, user_id, tb_spot_order_time.spot_id, tb_spot_order_time.start_time, tb_spot_order_time.end_time, order_date, order_status, note, tb_spot.spot_name, tb_spot_order_time.spot_order_time_id
+        SELECT order_id, user_id, tb_spot_order_time.spot_id,
+        tb_spot_order_time.start_time, tb_spot_order_time.end_time,
+        order_date, order_status, note, tb_spot.spot_name,
+        tb_spot_order_time.spot_order_time_id,
+        tb_spot_order_time.suggested_people
         FROM tb_order, tb_spot, tb_spot_order_time
         WHERE user_id = #{userId}
         and tb_spot.spot_id = tb_spot_order_time.spot_id
@@ -111,18 +115,23 @@
         SET order_status = 1
         WHERE order_id = #{orderId};
     </update>
-    <select id="checkOrderPeople" resultType="java.lang.Integer">
+    <update id="disagreeOrder">
+        UPDATE tb_order
+        SET order_status = 2
+        WHERE order_id = #{orderId};
+    </update>
+    <select id="getOrderedPeopleByOrderId" resultType="java.lang.Integer">
         SELECT tb_spot_order_time.suggested_people > COUNT(CASE
-           WHEN tb_order.order_status = 1 and tb_order.order_date = "2020-06-25"
+           WHEN tb_order.order_status = 1 and tb_order.order_date = #{orderDate}
                THEN tb_order.order_status
            END) AS ordered_people
         FROM tb_spot_order_time LEFT JOIN tb_order on tb_spot_order_time.spot_order_time_id = tb_order.order_time
         WHERE tb_order.order_id = #{orderId}
         GROUP BY spot_order_time_id;
     </select>
-    <update id="disagreeOrder">
-        UPDATE tb_order
-        SET order_status = 2
-        WHERE order_id = #{orderId};
-    </update>
+    <select id="getOrderedPeopleByOrderTimeId" resultType="java.lang.Integer">
+        SELECT COUNT(order_id) AS ordered_people
+        FROM tb_order
+        WHERE order_date = #{date} and order_time = #{spotOrderTimeId} and order_status = 1;
+    </select>
 </mapper>

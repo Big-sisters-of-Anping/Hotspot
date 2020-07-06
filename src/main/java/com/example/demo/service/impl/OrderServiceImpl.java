@@ -40,6 +40,8 @@ public class OrderServiceImpl implements OrderService {
         List<Order> result = orderDao.listUserOrders(userId);
         for (int i = 0; i < result.size(); ++i){
             result.get(i).formatTime();
+            SpotOrderTime curr = result.get(i).getOrderTime();
+            curr.setOrderedPeople(orderDao.getOrderedPeopleByOrderTimeId(curr.getSpotOrderTimeId(), result.get(i).getOrderDate()));
         }
         return result;
     }
@@ -91,7 +93,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public boolean checkOrderPeople(int orderId, Date orderDate) {
-        return 1 == orderDao.checkOrderPeople(orderId, orderDate);
+        return 1 == orderDao.getOrderedPeopleByOrderId(orderId, orderDate);
     }
 
     @Transactional
@@ -172,5 +174,10 @@ public class OrderServiceImpl implements OrderService {
         }catch (Exception e){
             throw new RuntimeException("拒绝预约失败：" + e.getMessage());
         }
+    }
+
+    @Override
+    public int getOrderedPeople(int spotOrderTimeId, Date date) {
+        return orderDao.getOrderedPeopleByOrderTimeId(spotOrderTimeId, date);
     }
 }

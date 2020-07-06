@@ -28,4 +28,5 @@ public interface OrderService {
     boolean disagreeOrder(int orderId);
     boolean checkOrderPeople(int orderId, Date orderDate);
     int insertAndCheckOrder(Order order);
+    int getOrderedPeople(int spotOrderTimeId, Date date);
 }

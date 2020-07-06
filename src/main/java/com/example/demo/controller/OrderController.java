@@ -78,6 +78,13 @@ public class OrderController {
         return orderService.listOrdersOfTheseThreeDays(spotId, orderStatus);
     }
 
+    @ApiOperation(value = "获取预约人数", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger
+    @GetMapping(value = "/getOrderedPeople")
+    @TokenLimit(CheckToken = false)
+    private Integer getOrderedPeople(int spotOrderTimeId, Date date){
+        return orderService.getOrderedPeople(spotOrderTimeId, date);
+    }
+
     @ApiOperation(value = "新增预约", notes = "返回预约Id\n需要传入userId、orderDate、spotOrderTimeId、note(可为空字符串)\n注意：日期格式为\"yyyy-mm-dd\"\n特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger
     @PostMapping(value = "/addOrder")
     @TokenLimit(CheckToken = false)
