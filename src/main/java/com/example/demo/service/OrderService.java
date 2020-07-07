@@ -21,6 +21,8 @@ public interface OrderService {
     List<Order> listOrdersBySpotTime(int spotOrderTimeId, Date date);
     List<Order> listOrdersOfTheseThreeDays(int spotId, int orderStatus);
     List<SpotOrderTime> listSpotOrderTime(int spotId, Date date);
+    List<SpotOrderTime> listOrderedPeople(int spotId, Date startDate, Date endDate, int orderStatus);
+    List<Order> listDailyOrderedPeople(int spotId, Date startDate, Date endDate, int orderStatus);
     int insertOrder(Order order);
     boolean deleteOrder(int orderId);
     boolean cancelOrder(int orderId);

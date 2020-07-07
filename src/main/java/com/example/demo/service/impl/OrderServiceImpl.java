@@ -77,6 +77,45 @@ public class OrderServiceImpl implements OrderService {
         return result;
     }
 
+    @Override
+    public List<SpotOrderTime> listOrderedPeople(int spotId, Date startDate, Date endDate, int orderStatus) {
+        List<SpotOrderTime> result;
+        if (orderStatus != 5) {
+            result = orderDao.listOrderedPeople(spotId, startDate, endDate, orderStatus);
+        }
+        else{
+            result = orderDao.listAllOrderedPeople(spotId, startDate, endDate);
+        }
+        for (int i = 0; i < result.size(); ++i){
+            result.get(i).formatTime();
+        }
+        return result;
+    }
+
+    @Override
+    public List<Order> listDailyOrderedPeople(int spotId, Date startDate, Date endDate, int orderStatus) {
+        List<Order> result;
+        if (orderStatus != 5)
+            result = orderDao.listDailyOrderedPeople(spotId, startDate, endDate, orderStatus);
+        else {
+            result = orderDao.listDailyAllOrderedPeople(spotId, startDate, endDate);
+        }
+        LocalDate t = startDate.toLocalDate();
+        int index = 0;
+        while (java.sql.Date.valueOf(t).before(endDate)){
+            if (java.sql.Date.valueOf(t).compareTo(result.get(index).getOrderDate()) != 0){
+                System.out.println(java.sql.Date.valueOf(t) + " " + result.get(index).getOrderDate());
+                Order curr = new Order();
+                curr.setOrderDate(java.sql.Date.valueOf(t));
+                curr.getOrderTime().setOrderedPeople(0);
+                result.add(index, curr);
+            }
+            t = t.plusDays(1);
+            ++index;
+        }
+        return result;
+    }
+
     @Transactional
     @Override
     public int insertOrder(Order order) {

@@ -21,6 +21,10 @@ public interface OrderDao {
     List<Order> listOrdersBySpotTime(int spotOrderTimeId, Date orderDate);
     List<Order> listOrdersOfRangeDays(int spotId, int orderStatus, Date startDate, Date endDate);
     List<SpotOrderTime> listSpotOrderTime(int spotId, Date orderDate);
+    List<SpotOrderTime> listOrderedPeople(int spotId, Date startDate, Date endDate, int orderStatus);
+    List<SpotOrderTime> listAllOrderedPeople(int spotId, Date startDate, Date endDate);
+    List<Order> listDailyOrderedPeople(int spotId, Date startDate, Date endDate, int orderStatus);
+    List<Order> listDailyAllOrderedPeople(int spotId, Date startDate, Date endDate);
     int insertOrder(Order order);
     int deleteOrder(int orderId);
     int cancelOrder(int orderId);
