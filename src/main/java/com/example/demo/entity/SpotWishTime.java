@@ -33,6 +33,12 @@ public class SpotWishTime {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String endTime;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Integer suggestedPeople;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Integer wishedPeople;
+
     public Integer getSpotId() {
         return spotId;
     }
@@ -76,5 +82,21 @@ public class SpotWishTime {
 
     public void setSpotWishTimeId(Integer spotWishTimeId) {
         this.spotWishTimeId = spotWishTimeId;
+    }
+
+    public Integer getSuggestedPeople() {
+        return suggestedPeople;
+    }
+
+    public void setSuggestedPeople(Integer suggestedPeople) {
+        this.suggestedPeople = suggestedPeople;
+    }
+
+    public Integer getWishedPeople() {
+        return wishedPeople;
+    }
+
+    public void setWishedPeople(Integer wishedPeople) {
+        this.wishedPeople = wishedPeople;
     }
 }

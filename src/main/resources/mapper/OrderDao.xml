@@ -87,7 +87,7 @@
                tb_spot_order_time.suggested_people,
                COUNT(CASE
                    WHEN tb_order.order_status = 1 and tb_order.order_date = #{orderDate}
-                       THEN tb_order.order_status
+                       THEN tb_order.order_id
                    END) AS ordered_people
         FROM tb_spot, tb_spot_order_time LEFT JOIN tb_order on tb_spot_order_time.spot_order_time_id = tb_order.order_time
         WHERE tb_spot.spot_id = #{spotId}

@@ -45,8 +45,8 @@ public class WishServiceImpl implements WishService {
     }
 
     @Override
-    public List<SpotWishTime> listSpotWishTime(int spotId) {
-        List<SpotWishTime> result = wishDao.listSpotWishTime(spotId);
+    public List<SpotWishTime> listSpotWishTime(int spotId, Date date) {
+        List<SpotWishTime> result = wishDao.listSpotWishTime(spotId, date);
         for (int i = 0; i < result.size(); ++i){
             result.get(i).formatTime();
         }

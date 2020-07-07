@@ -26,10 +26,40 @@ public class SearchServiceImpl implements SearchService {
     @Autowired
     private SpotDao spotDao;
 
+    // Calculate the Least common multiple
+    public static int LeastCommonMultiple(int a, int b){
+        if(a < b){
+            int t = a;
+            a = b;
+            b = t;
+        }
+        while(b != 0){
+            if(a == b){
+                return a;
+            }else{
+                int k = a % b;
+                a = b;
+                b = k;
+            }
+        }
+        return a;
+    }
+
     @Override
     public List<Spot> searchSpotsByName(String spotName) {
-        if (!"".equals(spotName))
-            return spotDao.searchSpotByName(spotName);
+        if (!"".equals(spotName)) {
+            List<Spot> spots = spotDao.searchSpotByName(spotName);
+            if (spots.size() > 1){
+                spots.sort(new Comparator<Spot>() {
+                    @Override
+                    public int compare(Spot o1, Spot o2) {
+                        int least_common = LeastCommonMultiple(o1.getSuggestedPeople(), o2.getSuggestedPeople());
+                        return (o1.getRealtimePeople()*(least_common/o1.getSuggestedPeople()) - o2.getRealtimePeople()*(least_common/o2.getSuggestedPeople()));
+                    }
+                });
+            }
+            return spots;
+        }
         else
             throw new RuntimeException("spotName不能为空！");
     }

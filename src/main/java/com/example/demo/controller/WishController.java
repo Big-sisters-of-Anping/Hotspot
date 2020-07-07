@@ -45,8 +45,8 @@ public class WishController {
     @ApiOperation(value = "列出某地的想去时间段", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger
     @GetMapping(value = "/listSpotWishTime")
     @TokenLimit(CheckToken = false)
-    List<SpotWishTime> listSpotWishTime(int spotId){
-        return wishService.listSpotWishTime(spotId);
+    List<SpotWishTime> listSpotWishTime(int spotId, Date date){
+        return wishService.listSpotWishTime(spotId, date);
     }
 
     @ApiOperation(value = "添加想去", notes = "需要传入：userId, spotWishTimeId, wishDate\n添加成功则返回wishId\n特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger

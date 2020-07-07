@@ -47,12 +47,17 @@
                tb_spot.spot_name,
                tb_spot_wish_time.spot_wish_time_id,
                tb_spot_wish_time.start_time,
-               tb_spot_wish_time.end_time
+               tb_spot_wish_time.end_time,
+               tb_spot.suggested_people,
+               COUNT(CASE
+                   WHEN tb_wish.wish_date = #{date}
+                       THEN tb_wish.wish_id
+                   END) AS wished_people
         FROM tb_spot, tb_spot_wish_time LEFT JOIN tb_wish on tb_spot_wish_time.spot_wish_time_id = tb_wish.wish_time
         WHERE tb_spot.spot_id = #{spotId}
           and tb_spot.spot_id = tb_spot_wish_time.spot_id
         GROUP BY spot_wish_time_id
-        ORDER BY start_time ASC;
+        ORDER BY start_time ASC
     </select>
     <insert id="insertWish" parameterMap="ParamWish" keyProperty="wishId">
         INSERT INTO

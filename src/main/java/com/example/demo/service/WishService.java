@@ -9,7 +9,7 @@ import java.util.List;
 public interface WishService {
     List<Wish> listAllWishes();
     List<Wish> listUserWishes(int userId);
-    List<SpotWishTime> listSpotWishTime(int spotId);
+    List<SpotWishTime> listSpotWishTime(int spotId, Date date);
     int insertWish(Wish wish);
     boolean cancelWish(int wishId);
 }
