@@ -128,24 +128,28 @@ public class SpotServiceImpl implements SpotService {
                     }
                 });
                 int spotId = range_spots.get(list.get(0).getKey()).getSpotId();
-
-                /*
-                 * 更新用户位置
-                 */
-                try {
-                    int spotNum = spotDao.existUserLocation(userId);
-                    int effectedNum = 0;
-                    if (spotNum > 0){
-                        effectedNum = spotDao.updateUserLocation(userId, spotId);
-                    }else {
-                        effectedNum = spotDao.insertUserLocation(userId, spotId);
+                System.out.println(list.get(0).getValue());
+                if (list.get(0).getValue() < 20) {
+                    /*
+                     * 当且仅当用户与某地点位置小于20m时，更新地点realtimePeople信息
+                     */
+                    try {
+                        int spotNum = spotDao.existUserLocation(userId);
+                        int effectedNum = 0;
+                        if (spotNum > 0){
+                            effectedNum = spotDao.updateUserLocation(userId, spotId);
+                        }else {
+                            effectedNum = spotDao.insertUserLocation(userId, spotId);
+                        }
+                        if (effectedNum > 0)
+                            return true;
+                        else
+                            throw new RuntimeException("已计算出最近的注册地点你，更新用户位置失败：");
+                    }catch (Exception e){
+                        throw new RuntimeException("已计算出最近的注册地点你，更新用户位置失败：" + e.getMessage());
                     }
-                    if (effectedNum > 0)
-                        return true;
-                    else
-                        throw new RuntimeException("已计算出最近的注册地点你，更新用户位置失败：");
-                }catch (Exception e){
-                    throw new RuntimeException("已计算出最近的注册地点你，更新用户位置失败：" + e.getMessage());
+                }else{
+                    throw new RuntimeException("用户附近没有注册的地点！");
                 }
             }
             else {
