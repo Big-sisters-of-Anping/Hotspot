@@ -130,7 +130,7 @@
         ORDER BY start_time ASC;
     </select>
     <select id="listDailyOrderedPeople" resultMap="ResultOrder">
-        SELECT tb_order.order_date, COUNT(order_id) as ordered_people
+        SELECT tb_spot.spot_name, tb_order.order_date, COUNT(order_id) as ordered_people
         FROM tb_spot, tb_order, tb_spot_order_time
         WHERE tb_spot.spot_id = #{spotId}
         and tb_order.order_status = #{orderStatus}
@@ -141,7 +141,7 @@
         ORDER BY tb_order.order_date ASC;
     </select>
     <select id="listDailyAllOrderedPeople" resultMap="ResultOrder">
-        SELECT tb_order.order_date, COUNT(order_id) as ordered_people
+        SELECT tb_spot.spot_name, tb_order.order_date, COUNT(order_id) as ordered_people
         FROM tb_spot, tb_order, tb_spot_order_time
         WHERE tb_spot.spot_id = #{spotId}
         and tb_order.order_status != 3

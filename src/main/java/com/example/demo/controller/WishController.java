@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.controller.annotation.TokenLimit;
+import com.example.demo.entity.Order;
+import com.example.demo.entity.SpotOrderTime;
 import com.example.demo.entity.SpotWishTime;
 import com.example.demo.entity.Wish;
 import com.example.demo.service.WishService;
@@ -47,6 +49,20 @@ public class WishController {
     @TokenLimit(CheckToken = false)
     List<SpotWishTime> listSpotWishTime(int spotId, Date date){
         return wishService.listSpotWishTime(spotId, date);
+    }
+
+    @ApiOperation(value = "获取一段时间内的所有状态预约的每个时间段想去数", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger
+    @GetMapping(value = "/listWishedPeople")
+    @TokenLimit(CheckToken = false)
+    private List<SpotWishTime> listWishedPeople(int spotId, Date startDate, Date endDate){
+        return wishService.listWishedPeople(spotId, startDate, endDate);
+    }
+
+    @ApiOperation(value = "获取一段时间内的所有状态预约的每天想去数", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger
+    @GetMapping(value = "/listDailyWishedPeople")
+    @TokenLimit(CheckToken = false)
+    private List<Wish> listDailyWishedPeople(int spotId, Date startDate, Date endDate){
+        return wishService.listDailyWishedPeople(spotId, startDate, endDate);
     }
 
     @ApiOperation(value = "添加想去", notes = "需要传入：userId, spotWishTimeId, wishDate\n添加成功则返回wishId\n特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger

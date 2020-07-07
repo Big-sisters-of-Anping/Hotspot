@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.dao.WishDao;
+import com.example.demo.entity.Order;
 import com.example.demo.entity.SpotOrderTime;
 import com.example.demo.entity.SpotWishTime;
 import com.example.demo.entity.Wish;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -49,6 +51,33 @@ public class WishServiceImpl implements WishService {
         List<SpotWishTime> result = wishDao.listSpotWishTime(spotId, date);
         for (int i = 0; i < result.size(); ++i){
             result.get(i).formatTime();
+        }
+        return result;
+    }
+
+    @Override
+    public List<SpotWishTime> listWishedPeople(int spotId, Date startDate, Date endDate) {
+        List<SpotWishTime> result = wishDao.listWishedPeople(spotId, startDate, endDate);
+        for (int i = 0; i < result.size(); ++i){
+            result.get(i).formatTime();
+        }
+        return result;
+    }
+
+    @Override
+    public List<Wish> listDailyWishedPeople(int spotId, Date startDate, Date endDate) {
+        List<Wish> result = wishDao.listDailyWishedPeople(spotId, startDate, endDate);
+        LocalDate t = startDate.toLocalDate();
+        int index = 0;
+        while (java.sql.Date.valueOf(t).before(endDate)){
+            if (result.size() <= index || java.sql.Date.valueOf(t).compareTo(result.get(index).getWishDate()) != 0){
+                Wish curr = new Wish();
+                curr.setWishDate(java.sql.Date.valueOf(t));
+                curr.getWishTime().setWishedPeople(0);
+                result.add(index, curr);
+            }
+            t = t.plusDays(1);
+            ++index;
         }
         return result;
     }

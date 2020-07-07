@@ -10,6 +10,8 @@ public interface WishService {
     List<Wish> listAllWishes();
     List<Wish> listUserWishes(int userId);
     List<SpotWishTime> listSpotWishTime(int spotId, Date date);
+    List<SpotWishTime> listWishedPeople(int spotId, Date startDate, Date endDate);
+    List<Wish> listDailyWishedPeople(int spotId, Date startDate, Date endDate);
     int insertWish(Wish wish);
     boolean cancelWish(int wishId);
 }

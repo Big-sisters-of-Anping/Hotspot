@@ -13,6 +13,8 @@
             <result column="spot_name" jdbcType="VARCHAR" property="spotName" />
             <result column="start_time" jdbcType="TIME" property="startTime" />
             <result column="end_time" jdbcType="TIME" property="endTime" />
+            <result column="wished_people" jdbcType="INTEGER" property="wishedPeople" />
+            <result column="suggested_people" jdbcType="INTEGER" property="suggestedPeople" />
         </association>
     </resultMap>
     <parameterMap id="ParamWish" type="com.example.demo.entity.Wish">
@@ -24,6 +26,8 @@
         <parameter property="wishTime.spotName" resultMap="ResultWish" />
         <parameter property="wishTime.startTime" resultMap="ResultWish" />
         <parameter property="wishTime.endTime" resultMap="ResultWish" />
+        <parameter property="wishTime.wishedPeople"  resultMap="ResultWish" />
+        <parameter property="wishTime.suggestedPeople"  resultMap="ResultWish" />
     </parameterMap>
     <select id="listAllWishes" resultMap="ResultWish">
         SELECT wish_id, user_id, tb_spot_wish_time.spot_id, tb_spot_wish_time.start_time,
@@ -31,7 +35,7 @@
         FROM tb_wish, tb_spot, tb_spot_wish_time
         WHERE tb_spot.spot_id = tb_spot_wish_time.spot_id
         and tb_wish.wish_time = tb_spot_wish_time.spot_wish_time_id
-        ORDER BY wish_date DESC, start_time DESC, end_time DESC
+        ORDER BY wish_date DESC, start_time DESC, end_time DESC;
     </select>
     <select id="listUserWishes" resultMap="ResultWish">
         SELECT wish_id, user_id, tb_spot_wish_time.spot_id, tb_spot_wish_time.start_time,
@@ -40,7 +44,7 @@
         WHERE user_id = #{userId}
         and tb_spot.spot_id = tb_spot_wish_time.spot_id
         and tb_wish.wish_time = tb_spot_wish_time.spot_wish_time_id
-        ORDER BY wish_date DESC, start_time DESC, end_time DESC
+        ORDER BY wish_date DESC, start_time DESC, end_time DESC;
     </select>
     <select id="listSpotWishTime" resultType="com.example.demo.entity.SpotWishTime">
         SELECT tb_spot_wish_time.spot_id,
@@ -57,16 +61,43 @@
         WHERE tb_spot.spot_id = #{spotId}
           and tb_spot.spot_id = tb_spot_wish_time.spot_id
         GROUP BY spot_wish_time_id
-        ORDER BY start_time ASC
+        ORDER BY start_time ASC;
+    </select>
+    <select id="listWishedPeople"  resultType="com.example.demo.entity.SpotWishTime">
+        SELECT tb_spot_wish_time.spot_id,
+               tb_spot.spot_name,
+               tb_spot_wish_time.spot_wish_time_id,
+               tb_spot_wish_time.start_time,
+               tb_spot_wish_time.end_time,
+               tb_spot.suggested_people,
+               COUNT(CASE
+                   WHEN tb_wish.wish_date between #{startDate} and #{endDate}
+                       THEN tb_wish.wish_id
+                   END) AS wished_people
+        FROM tb_spot, tb_spot_wish_time LEFT JOIN tb_wish on tb_spot_wish_time.spot_wish_time_id = tb_wish.wish_time
+        WHERE tb_spot.spot_id = #{spotId}
+          and tb_spot.spot_id = tb_spot_wish_time.spot_id
+        GROUP BY spot_wish_time_id
+        ORDER BY start_time ASC;
+    </select>
+    <select id="listDailyWishedPeople" resultMap="ResultWish">
+        SELECT tb_spot.spot_name, tb_wish.wish_date, COUNT(wish_id) as wished_people
+        FROM tb_spot, tb_wish, tb_spot_wish_time
+        WHERE tb_spot.spot_id = #{spotId}
+        and tb_wish.wish_date between #{startDate} and #{endDate}
+        and tb_spot.spot_id = tb_spot_wish_time.spot_id
+        and tb_spot_wish_time.spot_wish_time_id = tb_wish.wish_time
+        GROUP BY tb_wish.wish_date
+        ORDER BY tb_wish.wish_date ASC;
     </select>
     <insert id="insertWish" parameterMap="ParamWish" keyProperty="wishId">
         INSERT INTO
         tb_wish(user_id, wish_date, wish_time)
         VALUES
-        (#{userId}, #{wishDate}, #{wishTime.spotWishTimeId})
+        (#{userId}, #{wishDate}, #{wishTime.spotWishTimeId});
     </insert>
     <delete id="cancelWish">
         DELETE FROM tb_wish
-        WHERE wish_id = #{wishId}
+        WHERE wish_id = #{wishId};
     </delete>
 </mapper>
