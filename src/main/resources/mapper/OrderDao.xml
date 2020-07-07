@@ -133,7 +133,7 @@
         SELECT tb_order.order_date, COUNT(order_id) as ordered_people
         FROM tb_spot, tb_order, tb_spot_order_time
         WHERE tb_spot.spot_id = #{spotId}
-        and tb_order.order_status = #{orderStauts}
+        and tb_order.order_status = #{orderStatus}
         and tb_order.order_date between #{startDate} and #{endDate}
         and tb_spot.spot_id = tb_spot_order_time.spot_id
         and tb_spot_order_time.spot_order_time_id = tb_order.order_time

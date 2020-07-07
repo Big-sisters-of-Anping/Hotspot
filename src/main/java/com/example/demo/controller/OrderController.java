@@ -85,18 +85,32 @@ public class OrderController {
         return orderService.getOrderedPeople(spotOrderTimeId, date);
     }
 
-    @ApiOperation(value = "获取一段时间内的预约数", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger
+    @ApiOperation(value = "获取一段时间内的某状态预约的每个时间段预约数", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger
     @GetMapping(value = "/listOrderedPeople")
     @TokenLimit(CheckToken = false)
     private List<SpotOrderTime> listOrderedPeople(int spotId, Date startDate, Date endDate, int orderStatus){
         return orderService.listOrderedPeople(spotId, startDate, endDate, orderStatus);
     }
 
-    @ApiOperation(value = "获取一段时间内的预约数", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger
+    @ApiOperation(value = "获取一段时间内的所有状态预约的每个时间段预约数", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger
+    @GetMapping(value = "/listOrderedPeopleOfAllStatus")
+    @TokenLimit(CheckToken = false)
+    private List<List<SpotOrderTime>> listOrderedPeopleOfAllStatus(int spotId, Date startDate, Date endDate){
+        return orderService.listOrderedPeopleOfAllStatus(spotId, startDate, endDate);
+    }
+
+    @ApiOperation(value = "获取一段时间内的某状态预约的每天预约数", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger
     @GetMapping(value = "/listDailyOrderedPeople")
     @TokenLimit(CheckToken = false)
     private List<Order> listDailyOrderedPeople(int spotId, Date startDate, Date endDate, int orderStatus){
         return orderService.listDailyOrderedPeople(spotId, startDate, endDate, orderStatus);
+    }
+
+    @ApiOperation(value = "获取一段时间内的所有状态预约的每天预约数", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger
+    @GetMapping(value = "/listDailyOrderedPeopleOfAllStatus")
+    @TokenLimit(CheckToken = false)
+    private List<List<Order>> listDailyOrderedPeopleOfAllStatus(int spotId, Date startDate, Date endDate){
+        return orderService.listDailyOrderedPeopleOfAllStatus(spotId, startDate, endDate);
     }
 
     @ApiOperation(value = "新增预约", notes = "返回预约Id\n需要传入userId、orderDate、spotOrderTimeId、note(可为空字符串)\n注意：日期格式为\"yyyy-mm-dd\"\n特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger

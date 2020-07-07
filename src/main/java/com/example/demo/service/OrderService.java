@@ -22,7 +22,9 @@ public interface OrderService {
     List<Order> listOrdersOfTheseThreeDays(int spotId, int orderStatus);
     List<SpotOrderTime> listSpotOrderTime(int spotId, Date date);
     List<SpotOrderTime> listOrderedPeople(int spotId, Date startDate, Date endDate, int orderStatus);
+    List<List<SpotOrderTime>> listOrderedPeopleOfAllStatus(int spotId, Date startDate, Date endDate);
     List<Order> listDailyOrderedPeople(int spotId, Date startDate, Date endDate, int orderStatus);
+    List<List<Order>> listDailyOrderedPeopleOfAllStatus(int spotId, Date startDate, Date endDate);
     int insertOrder(Order order);
     boolean deleteOrder(int orderId);
     boolean cancelOrder(int orderId);

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -93,6 +94,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<List<SpotOrderTime>> listOrderedPeopleOfAllStatus(int spotId, Date startDate, Date endDate) {
+        List<List<SpotOrderTime>> result = new ArrayList<List<SpotOrderTime>>();
+        result.add(listOrderedPeople(spotId, startDate, endDate, 0));
+        result.add(listOrderedPeople(spotId, startDate, endDate, 1));
+        result.add(listOrderedPeople(spotId, startDate, endDate, 2));
+        result.add(listOrderedPeople(spotId, startDate, endDate, 5));
+        return result;
+    }
+
+    @Override
     public List<Order> listDailyOrderedPeople(int spotId, Date startDate, Date endDate, int orderStatus) {
         List<Order> result;
         if (orderStatus != 5)
@@ -103,8 +114,7 @@ public class OrderServiceImpl implements OrderService {
         LocalDate t = startDate.toLocalDate();
         int index = 0;
         while (java.sql.Date.valueOf(t).before(endDate)){
-            if (java.sql.Date.valueOf(t).compareTo(result.get(index).getOrderDate()) != 0){
-                System.out.println(java.sql.Date.valueOf(t) + " " + result.get(index).getOrderDate());
+            if (result.size() <= index || java.sql.Date.valueOf(t).compareTo(result.get(index).getOrderDate()) != 0){
                 Order curr = new Order();
                 curr.setOrderDate(java.sql.Date.valueOf(t));
                 curr.getOrderTime().setOrderedPeople(0);
@@ -113,6 +123,16 @@ public class OrderServiceImpl implements OrderService {
             t = t.plusDays(1);
             ++index;
         }
+        return result;
+    }
+
+    @Override
+    public List<List<Order>> listDailyOrderedPeopleOfAllStatus(int spotId, Date startDate, Date endDate) {
+        List<List<Order>> result = new ArrayList<List<Order>>() ;
+        result.add(listDailyOrderedPeople(spotId, startDate, endDate, 0));
+        result.add(listDailyOrderedPeople(spotId, startDate, endDate, 1));
+        result.add(listDailyOrderedPeople(spotId, startDate, endDate, 2));
+        result.add(listDailyOrderedPeople(spotId, startDate, endDate, 5));
         return result;
     }
 
