@@ -5,11 +5,18 @@
 本项目是[Hotspot微信小程序](https://github.com/Big-sisters-of-Anping/Hotspot-front)的后端代码，也包括微信小程序内嵌的网页资源代码。项目涉及如下技术：
 
 * 使用 [SpringBoot](https://spring.io/projects/spring-boot) 作为后台开发框架
+
 * 使用 [MyBatis](https://mybatis.org/mybatis-3/) 作为持久层框架
+
 * 使用 [MySQL](https://www.mysql.com/) 作为数据库管理系统
+
 * 使用 [Swagger](https://swagger.io/) 来可视化接口，帮助前后端协同开发
-* 使用 [Nginx](http://nginx.org/en/) 来部署微信小程序内嵌的静态网站
+
 * 使用 [Google Chart](https://developers.google.cn/chart/interactive/docs) 来在网页中可视化统计数据
+
+* 使用 [Nginx](http://nginx.org/en/) 来部署微信小程序内嵌的静态网站（可选）
+
+  > 使用Nginx部署而不是直接利用SpringBoot部署，能够更好地分离前后端的开发
 
 
 
@@ -50,7 +57,7 @@
    nohup java -jar xxxx.jar &
    ```
 
-3. 使用Nginx部署静态网站（响应微信号程序前端的内嵌HTML）：
+3. （可选）为了更好地前后端分离开发，使用Nginx部署静态网站（响应微信号程序前端的内嵌HTML）：
 
    1. 将`src/main/resources/static`中的文件上传到服务器上
    2. 在Nginx配置文件中将80端口的站点目录（即`root`字段）配置成 `static` 文件夹路径
@@ -62,12 +69,12 @@
    netstat -ntlp
    ```
 
-   * 此时，只有当以下三个端口都处于LISTEN状态时，以上步骤才都已经顺利完成
+   * 此时，只有当以下端口都处于LISTEN状态时，以上步骤才都已经顺利完成
      * 3306: mysql —— 若未LISTEN，检查步骤1是否成功执行
      * 8080: 本项目	—— 若未LISTEN，检查步骤2是否成功执行
-     * 80: HTTP（Nginx代理）—— 若未LISTEN，检查步骤3是否成功执行
+     * 80（可选）: HTTP（Nginx代理）—— 若未LISTEN，检查步骤3是否成功执行
    * 注意：
-     * 若服务器上已经监听了这三个端口，但其他机器依旧不能访问这几个端口
+     * 若服务器上已经监听了这几个端口，但其他机器依旧不能访问这几个端口
        * 检查是否在服务器租赁商的云服务平台上为你的服务器添加了这几个端口的安全组规则
        * 检查防火墙设置
      * 你也可以用Nginx为需要监听的端口配置统一的代理端口。
