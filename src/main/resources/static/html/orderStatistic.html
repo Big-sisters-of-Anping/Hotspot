@@ -106,12 +106,13 @@
         forceParse: 0
     });
 
-    var chart_data = [];
-    var today_date = new Date();
-    var spotName = "";
-    var spotId = GetQueryString("spotId");
-    var spotType = GetQueryString("spotType");
-    var weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+    let chart_data = [];
+    const today_date = new Date();
+    let spotName = "";
+    const server_url = "localhost:8080"
+    const spotId = GetQueryString("spotId");
+    const spotType = GetQueryString("spotType");
+    const weeks = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
 
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawTodayChart);
@@ -128,7 +129,7 @@
 
     function getWeekDate(date_str) {
         let date = new Date(date_str)
-        var day = date.getDay();
+        let day = date.getDay();
         return day;
     }
 
@@ -143,7 +144,7 @@
         if (spotType == 1) {
             $.ajax({
                 type: "GET",
-                url: "http://47.104.248.28:8080/order/listOrderedPeopleOfAllStatus?spotId="+spotId+"&endDate="+DateToString(end)+"&startDate="+DateToString(start),
+                url: "http://"+server_url+"/order/listOrderedPeopleOfAllStatus?spotId="+spotId+"&endDate="+DateToString(end)+"&startDate="+DateToString(start),
                 dataType: "json",
                 success: function(res_data){
                     // 构建chart_data
@@ -185,7 +186,7 @@
         else {
             $.ajax({
                 type: "GET",
-                url: "http://47.104.248.28:8080/wish/listWishedPeople?spotId="+spotId+"&endDate="+DateToString(end)+"&startDate="+DateToString(start),
+                url: "http://"+server_url+"/wish/listWishedPeople?spotId="+spotId+"&endDate="+DateToString(end)+"&startDate="+DateToString(start),
                 dataType: "json",
                 success: function(res_data){
                     // 构建chart_data
@@ -229,7 +230,7 @@
         if (spotType == 1) {
             $.ajax({
                 type: "GET",
-                url: "http://47.104.248.28:8080/order/listDailyOrderedPeopleOfAllStatus?endDate="+DateToString(end)+"&spotId="+spotId+"&startDate="+DateToString(start),
+                url: "http://"+server_url+"/order/listDailyOrderedPeopleOfAllStatus?endDate="+DateToString(end)+"&spotId="+spotId+"&startDate="+DateToString(start),
                 dataType: "json",
                 success: function(res_data){
                     // 构建chart_data
@@ -268,7 +269,7 @@
         else {
             $.ajax({
                 type: "GET",
-                url: "http://47.104.248.28:8080/wish/listDailyWishedPeople?endDate="+DateToString(end)+"&spotId="+spotId+"&startDate="+DateToString(start),
+                url: "http://"+server_url+"/wish/listDailyWishedPeople?endDate="+DateToString(end)+"&spotId="+spotId+"&startDate="+DateToString(start),
                 dataType: "json",
                 success: function(res_data){
                     // 构建chart_data
