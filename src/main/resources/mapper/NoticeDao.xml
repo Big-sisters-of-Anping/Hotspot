@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.NoticeDao">
+    <select id="listNotices" resultType="com.example.demo.entity.Notice">
+        SELECT tb_notice.*, spot_name
+        FROM tb_notice, tb_spot
+        WHERE tb_notice.spot_id = tb_spot.spot_id
+        ORDER BY issue_date DESC;
+    </select>
+    <insert id="addNotice" parameterType="com.example.demo.entity.Notice" keyProperty="noticeId">
+        INSERT INTO
+        tb_notice(spot_id, notice_title, notice_detail, issue_date)
+        VALUES
+        (#{spotId}, #{noticeTitle}, #{noticeDetail}, #{issueDate});
+    </insert>
+</mapper>
