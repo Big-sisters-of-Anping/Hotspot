@@ -1,6 +1,6 @@
 # Hotspot
 
-### 1. 功能描述
+### 1. 项目描述
 
 本项目是[Hotspot微信小程序](https://github.com/Big-sisters-of-Anping/Hotspot-front)的后端代码，也包括微信小程序内嵌的网页资源代码。项目涉及如下技术：
 
