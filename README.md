@@ -171,7 +171,7 @@
    │       ├── mybatis-config.xml	;MyBatis配置
    │       ├── static	;静态文件（为了更快地加载html界面，一些依赖下载到了本地）
    │       │   ├── html
-   │       │   │	 └── orderStatistic.html ;预约统计界面
+   │       │   │   └── orderStatistic.html ;预约统计界面
    │       │   ├── bootstrap-datetimepicker-master	;Bootstrap的datetimepiker依赖包
    │       │   ├── bootstrap-3.3.7-dist	;Bootstrap依赖包
    │       │   └── jquery	;jquery依赖包
