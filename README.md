@@ -33,7 +33,7 @@
       java -version # 检查是否安装成功
       ```
    
-   3. 安装Nginx
+   3. 安装Nginx（可选）
 
 1. 数据库建立：
 
@@ -57,7 +57,7 @@
    nohup java -jar xxxx.jar &
    ```
 
-3. （可选）为了更好地前后端分离开发，使用Nginx部署静态网站（响应微信号程序前端的内嵌HTML）：
+3. （可选）为了更好地前后端分离开发，使用Nginx部署静态网站（响应微信小程序前端内嵌的HTML）：
 
    1. 将`src/main/resources/static`中的文件上传到服务器上
    2. 在Nginx配置文件中将80端口的站点目录（即`root`字段）配置成 `static` 文件夹路径
