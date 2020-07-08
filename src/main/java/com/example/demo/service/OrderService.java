@@ -20,6 +20,7 @@ public interface OrderService {
     List<Order> listSpotOrders(int spotId);
     List<Order> listOrdersBySpotTime(int spotOrderTimeId, Date date);
     List<Order> listOrdersOfTheseThreeDays(int spotId, int orderStatus);
+    List<Order> listTomorrowPendingOrders(int spotId);
     List<SpotOrderTime> listSpotOrderTime(int spotId, Date date);
     List<SpotOrderTime> listOrderedPeople(int spotId, Date startDate, Date endDate, int orderStatus);
     List<List<SpotOrderTime>> listOrderedPeopleOfAllStatus(int spotId, Date startDate, Date endDate);

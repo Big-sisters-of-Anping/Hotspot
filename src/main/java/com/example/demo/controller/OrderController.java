@@ -78,6 +78,13 @@ public class OrderController {
         return orderService.listOrdersOfTheseThreeDays(spotId, orderStatus);
     }
 
+    @ApiOperation(value = "列出明天某地的待处理预约", notes = "\n特殊说明：测试用，本函数不需要Token验证（实现时将开启）")
+    @GetMapping(value = "/listTomorrowPendingOrders")
+    @TokenLimit(CheckToken = false)
+    private List<Order> listTomorrowPendingOrders(int spotId){
+        return orderService.listTomorrowPendingOrders(spotId);
+    }
+
     @ApiOperation(value = "获取预约人数", notes = "特殊说明：测试用，本函数不需要Token验证（实现时将开启）")  // for swagger
     @GetMapping(value = "/getOrderedPeople")
     @TokenLimit(CheckToken = false)
