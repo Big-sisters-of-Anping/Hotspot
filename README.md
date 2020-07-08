@@ -19,10 +19,14 @@
 
 0. 环境依赖
    1. 安装MySQL
-   2. 安装jdk环境
+   
+   2. 安装JDK
+   
+      ```shell
+      java -version # 检查是否安装成功
+      ```
+   
    3. 安装Nginx
-
-> 建议在CentOS 7环境的服务器下部署
 
 1. 数据库建立：
 
@@ -33,9 +37,9 @@
       systemctl start mysqld.service
       ```
 
-   2. 根据MySQL用户名和密码的设置更改 `application-*.yml` 配置文件中的jdbc配置。
+   2. 根据MySQL用户名和密码的设置更改 `application-*.yml` 配置文件中的jdbc配置
 
-   3. 执行 `src/main/resources/databaseGeneratedSQL.sql` 中的所有语句，以便创建项目所需的数据库表。
+   3. 执行 `src/main/resources/databaseGeneratedSQL.sql` 中的所有语句，以便创建项目所需的数据库表
 
 2. 运行后台服务：
 
@@ -63,7 +67,9 @@
      * 8080: 本项目	—— 若未LISTEN，检查步骤2是否成功执行
      * 80: HTTP（Nginx代理）—— 若未LISTEN，检查步骤3是否成功执行
    * 注意：
-     * 若服务器上已经监听了这三个端口，但其他机器依旧不能访问这几个端口 ——> 请建超是否在服务器租赁商的云服务平台上为你的服务器添加了这几个端口的安全组规则。
+     * 若服务器上已经监听了这三个端口，但其他机器依旧不能访问这几个端口
+       * 检查是否在服务器租赁商的云服务平台上为你的服务器添加了这几个端口的安全组规则
+       * 检查防火墙设置
      * 你也可以用Nginx为需要监听的端口配置统一的代理端口。
 
 5. 检查是否部署成功：
@@ -82,11 +88,9 @@
 
 ### 3. 项目结构
 
-
-
 ```lisp
 .
-├── pom.xml		; maven配置文件
+├── pom.xml	; maven配置文件
 └── src	;主要的开发文件夹
    ├── main
    │   ├── java
@@ -96,7 +100,7 @@
    │   │               ├── DemoApplication.java	;工程启动类
    │   │               ├── config	;配置信息文件夹
    │   │               │   ├── dao	;数据访问配置
-   │   │               │   │   ├── DataSourceConfiguration.java			;jdbc连接配置
+   │   │               │   │   ├── DataSourceConfiguration.java	;jdbc连接配置
    │   │               │   │   └── SessionFactoryConfiguration.java	;MyBatis配置
    │   │               │   ├── service	;具体的服务类配置
    │   │               │   │   ├── CorsConfig.java	;跨域服务配置（用于浏览器访问时）
