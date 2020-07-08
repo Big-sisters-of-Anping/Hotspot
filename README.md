@@ -33,7 +33,7 @@
    1. 开启mysql服务
 
       ```shell
-      # CentOS下（需要root权限）
+      # CentOS下
       systemctl start mysqld.service
       ```
 
