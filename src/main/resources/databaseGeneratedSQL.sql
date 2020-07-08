@@ -1,3 +1,7 @@
+create database test;
+
+use test;
+
 create table tb_park
 (
     park_id   int auto_increment

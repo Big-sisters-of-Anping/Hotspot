@@ -1,36 +1,88 @@
 # Hotspot
 
-### 功能描述
+### 1. 功能描述
 
-本项目Hotspot的后端代码，使用如下技术：
+本项目是[Hotspot微信小程序](https://github.com/Big-sisters-of-Anping/Hotspot-front)的后端代码，也包括微信小程序内嵌的网页资源代码。项目涉及如下技术：
 
-* SpringBoot 作为后台开发框架
-* MyBatis 作为持久层框架
-* MySQL 作为数据库管理系统
-
-
-
-### 开发环境
-
-
-
-#### 部署
-
-##### 部署流程
+* 使用 [SpringBoot](https://spring.io/projects/spring-boot) 作为后台开发框架
+* 使用 [MyBatis](https://mybatis.org/mybatis-3/) 作为持久层框架
+* 使用 [MySQL](https://www.mysql.com/) 作为数据库管理系统
+* 使用 [Swagger](https://swagger.io/) 来可视化接口，帮助前后端协同开发
+* 使用 [Nginx](http://nginx.org/en/) 来部署微信小程序内嵌的静态网站
+* 使用 [Google Chart](https://developers.google.cn/chart/interactive/docs) 来在网页中可视化统计数据
 
 
 
-##### 云服务器（已部署）
+### 2. 部署
+
+#### 2.1 部署流程
+
+0. 环境依赖
+   1. 安装MySQL
+   2. 安装jdk环境
+   3. 安装Nginx
+
+> 建议在CentOS 7环境的服务器下部署
+
+1. 数据库建立：
+
+   1. 开启mysql服务
+
+      ```shell
+      # CentOS下（需要root权限）
+      systemctl start mysqld.service
+      ```
+
+   2. 根据MySQL用户名和密码的设置更改 `application-*.yml` 配置文件中的jdbc配置。
+
+   3. 执行 `src/main/resources/databaseGeneratedSQL.sql` 中的所有语句，以便创建项目所需的数据库表。
+
+2. 运行后台服务：
+
+   1. 打包项目并将生成的jar包传到服务器
+   2. 运行jar包，并将日志输出到 `nohup.out`
+
+   ```shell
+   nohup java -jar xxxx.jar &
+   ```
+
+3. 使用Nginx部署静态网站（响应微信号程序前端的内嵌HTML）：
+
+   1. 将`src/main/resources/static`中的文件上传到服务器上
+   2. 在Nginx配置文件中将80端口的站点目录（即`root`字段）配置成 `static` 文件夹路径
+   3. 重新启动Nginx
+
+4. 检查端口：
+
+   ```shell
+   netstat -ntlp
+   ```
+
+   * 此时，只有当以下三个端口都处于LISTEN状态时，以上步骤才都已经顺利完成
+     * 3306: mysql —— 若未LISTEN，检查步骤1是否成功执行
+     * 8080: 本项目	—— 若未LISTEN，检查步骤2是否成功执行
+     * 80: HTTP（Nginx代理）—— 若未LISTEN，检查步骤3是否成功执行
+   * 注意：
+     * 若服务器上已经监听了这三个端口，但其他机器依旧不能访问这几个端口 ——> 请建超是否在服务器租赁商的云服务平台上为你的服务器添加了这几个端口的安全组规则。
+     * 你也可以用Nginx为需要监听的端口配置统一的代理端口。
+
+5. 检查是否部署成功：
+
+   * 为了方便前后端协同开发，项目中配置了swagger；访问项目的swagger主页，若主页成功加载并且接口能够成功执行，则部署完成
+
+#### 2.2 云服务器（已部署）
 
 - 公网IP：47.104.248.28
 - 开放端口：22(ssh)、3306(MySQL)、8080(Hotspot)、80(HTTP, Nginx代理)
 - 用户名：root
 - 密码：WQY525yue
-- Hotspot项目Swagger主页：http://47.104.248.28:8080/swagger-ui.html
+- Swagger主页：http://47.104.248.28:8080/swagger-ui.html
 
 
 
-### 项目结构
+### 3. 项目结构
+
+
 
 ```lisp
 .
@@ -44,7 +96,7 @@
    │   │               ├── DemoApplication.java	;工程启动类
    │   │               ├── config	;配置信息文件夹
    │   │               │   ├── dao	;数据访问配置
-   │   │               │   │   ├── DataSourceConfiguration.java	;jdbc连接配置
+   │   │               │   │   ├── DataSourceConfiguration.java			;jdbc连接配置
    │   │               │   │   └── SessionFactoryConfiguration.java	;MyBatis配置
    │   │               │   ├── service	;具体的服务类配置
    │   │               │   │   ├── CorsConfig.java	;跨域服务配置（用于浏览器访问时）
