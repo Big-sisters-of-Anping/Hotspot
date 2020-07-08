@@ -16,7 +16,7 @@
 
 * 使用 [Nginx](http://nginx.org/en/) 来部署微信小程序内嵌的静态网站（可选）
 
-  > 使用Nginx部署而不是直接利用SpringBoot部署，能够更好地分离前后端的开发
+  > 使用Nginx部署而不是直接利用SpringBoot部署，能够更好地在开发时实现前后端分离
 
 
 
