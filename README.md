@@ -127,7 +127,6 @@
    │   │               ├── controller	;前端控制器文件夹
    │   │               │   ├── NoticeController.java
    │   │               │   ├── OrderController.java
-   │   │               │   ├── ParkController.java
    │   │               │   ├── SearchController.java
    │   │               │   ├── SpotController.java
    │   │               │   ├── UserController.java
@@ -140,14 +139,12 @@
    │   │               ├── dao	;数据访问层文件夹
    │   │               │   ├── NoticeDao.java
    │   │               │   ├── OrderDao.java
-   │   │               │   ├── ParkDao.java
    │   │               │   ├── SpotDao.java
    │   │               │   ├── UserDao.java
    │   │               │   └── WishDao.java
    │   │               ├── entity	;实体类文件夹
    │   │               │   ├── Notice.java
    │   │               │   ├── Order.java
-   │   │               │   ├── Park.java
    │   │               │   ├── Spot.java
    │   │               │   ├── SpotOrderTime.java
    │   │               │   ├── SpotWishTime.java
@@ -158,7 +155,6 @@
    │   │               ├── service	;数据服务层文件夹
    │   │               │   ├── NoticeService.java
    │   │               │   ├── OrderService.java
-   │   │               │   ├── ParkService.java
    │   │               │   ├── SearchService.java
    │   │               │   ├── SpotService.java
    │   │               │   ├── UserService.java
@@ -167,7 +163,6 @@
    │   │               │       ├── NoticeServiceImpl.java
    │   │               │       ├── OrderScheduleTask.java	;每晚23:00调用预约决策算法
    │   │               │       ├── OrderServiceImpl.java
-   │   │               │       ├── ParkServiceImpl.java
    │   │               │       ├── SearchServiceImpl.java
    │   │               │       ├── SpotServiceImpl.java
    │   │               │       ├── UserServiceImpl.java
@@ -181,7 +176,6 @@
    │       ├── mapper	;MyBatis映射文件（对应../java/com/example/demo/dao中的每个数据访问接口）
    │       │   ├── NoticeDao.xml
    │       │   ├── OrderDao.xml
-   │       │   ├── ParkDao.xml
    │       │   ├── SpotDao.xml
    │       │   ├── UserDao.xml
    │       │   └── WishDao.xml
