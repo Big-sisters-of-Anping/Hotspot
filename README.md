@@ -39,8 +39,10 @@
       java -version # 检查是否安装成功
       ```
    
-   3. 安装 Nginx （可选）
+   3. 安装 Python3（预约决策算法所需）
 
+   4. 安装 Nginx （可选）
+   
 1. 数据库建立：
 
    1. 开启 MySQL 服务
@@ -57,7 +59,8 @@
 2. 运行后台服务：
 
    1. 在本地使用 Maven 打包项目，并将 `target`  文件夹下生成的jar包传到服务器
-   2. 在服务器上运行jar包，并将日志输出到 `nohup.out`
+   2. 将 `order.py` 上传到jar包同级文件夹中
+   3. 在服务器上运行jar包，并将日志输出到 `nohup.out`
 
    ```shell
    nohup java -jar xxxx.jar &
@@ -104,6 +107,7 @@
 ```lisp
 .
 ├── pom.xml	; maven配置文件
+├── order.py	; 预约决策算法
 └── src	;主要的开发文件夹
    ├── main
    │   ├── java
@@ -161,7 +165,7 @@
    │   │               │   ├── WishService.java
    │   │               │   └── impl	;数据服务的实现类文件夹
    │   │               │       ├── NoticeServiceImpl.java
-   │   │               │       ├── OrderScheduleTask.java
+   │   │               │       ├── OrderScheduleTask.java	;每晚23:00调用预约决策算法
    │   │               │       ├── OrderServiceImpl.java
    │   │               │       ├── ParkServiceImpl.java
    │   │               │       ├── SearchServiceImpl.java

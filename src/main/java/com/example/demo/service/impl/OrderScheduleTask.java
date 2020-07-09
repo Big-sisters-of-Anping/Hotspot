@@ -24,7 +24,7 @@ public class OrderScheduleTask {
         System.out.println("Execute order scheduler ----------------");
         Runtime runtime = Runtime.getRuntime();
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(runtime.exec("ifconfig").getInputStream()));
+            BufferedReader br = new BufferedReader(new InputStreamReader(runtime.exec("python3 order.py").getInputStream()));
             String line = null;
             StringBuffer b = new StringBuffer();
             while ((line=br.readLine())!=null) {
