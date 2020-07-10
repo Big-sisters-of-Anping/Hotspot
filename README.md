@@ -4,7 +4,7 @@
 
 本项目是[Hotspot微信小程序](https://github.com/Big-sisters-of-Anping/Hotspot-front)的后端代码，也包括微信小程序内嵌的网页资源代码。
 
-后端开发项目涉及如下技术：
+后端开发涉及如下技术：
 
 * 使用 [SpringBoot](https://spring.io/projects/spring-boot) 作为后台开发框架
 
@@ -20,7 +20,7 @@
 
   > 使用Nginx部署而不是直接利用SpringBoot部署，是为了更好地在开发时实现前后端分离
 
-微信小程序内嵌的网页开发涉及如下技术：
+微信小程序内嵌网页的开发涉及如下技术：
 
 * 使用 [BootStrap](https://www.bootcss.com/) 作为前端框架
 * 使用 [jQuery](https://jquery.com/)  来简化 JavaScript 开发
