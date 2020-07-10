@@ -2,7 +2,9 @@
 
 ### 1. 项目描述
 
-本项目是[Hotspot微信小程序](https://github.com/Big-sisters-of-Anping/Hotspot-front)的后端代码，也包括微信小程序内嵌的网页资源代码。项目涉及如下技术：
+本项目是[Hotspot微信小程序](https://github.com/Big-sisters-of-Anping/Hotspot-front)的后端代码，也包括微信小程序内嵌的网页资源代码。
+
+后端开发项目涉及如下技术：
 
 * 使用 [SpringBoot](https://spring.io/projects/spring-boot) 作为后台开发框架
 
@@ -12,17 +14,17 @@
 
 * 使用 [MySQL](https://www.mysql.com/) 作为数据库管理系统
 
-* 使用 [BootStrap](https://www.bootcss.com/) 作为前端框架
-
-* 使用 [Google Chart](https://developers.google.cn/chart/interactive/docs) 来在网页中可视化统计数据
-
-* 使用 [jQuery](https://jquery.com/)  来简化 JavaScript 开发
-
 * 使用 [Swagger](https://swagger.io/) 来可视化接口，帮助前后端协同开发
 
 * 使用 [Nginx](http://nginx.org/en/) 来部署微信小程序内嵌的静态网站（可选）
 
-  > 使用Nginx部署而不是直接利用SpringBoot部署，能够更好地在开发时实现前后端分离
+  > 使用Nginx部署而不是直接利用SpringBoot部署，是为了更好地在开发时实现前后端分离
+
+微信小程序内嵌的网页开发涉及如下技术：
+
+* 使用 [BootStrap](https://www.bootcss.com/) 作为前端框架
+* 使用 [jQuery](https://jquery.com/)  来简化 JavaScript 开发
+* 使用 [Google Chart](https://developers.google.cn/chart/interactive/docs) 来在网页中可视化统计数据
 
 
 
@@ -91,14 +93,6 @@
 5. 检查是否部署成功：
 
    * 为了方便前后端协同开发，项目中配置了Swagger；访问项目的Swagger主页，若主页成功加载并且接口能够成功执行，则部署完成
-
-#### 2.2 云服务器（已部署）
-
-- 公网IP：47.104.248.28
-- 开放端口：22(ssh)、3306(MySQL)、8080(Hotspot)、80(HTTP, Nginx代理)
-- 用户名：root
-- 密码：WQY525yue
-- Swagger主页：http://47.104.248.28:8080/swagger-ui.html
 
 
 
